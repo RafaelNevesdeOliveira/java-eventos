@@ -1,4 +1,4 @@
-package br.com.fiap.b3.aula1.infrastructure.config;
+package br.com.fiap.b3.aula1.infra.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.amqp.core.Queue;
@@ -6,6 +6,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
+/**
+ * Declara a fila durável e o tópico Kafka com três partições.
+ *
+ * <p>Quem chama: Spring durante a inicialização da aula 1.
+ *
+ * <p>Quem é chamado: beans Queue e NewTopic; os listeners usam os mesmos nomes de destino.
+ */
 @Configuration
 public class Topology {
   public static final String QUEUE = "aula1.ordens.comandos";

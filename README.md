@@ -74,3 +74,7 @@ cd laboratorios-eda
 - [Guia da aula 2: contratos, Outbox e idempotência](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/AULA-2.md).
 
 Para obter as três branches, clone o repositório ou use o bundle incluído no ZIP da entrega. O botão **Code → Download ZIP** do GitHub baixa somente uma branch, sem histórico.
+
+## Maven e leitura das classes
+
+Use JDK 25 e Maven 3.9. Na raiz desta branch, execute `mvn clean verify`. [ARQUITETURA.md](docs/ARQUITETURA.md) explica as camadas **controller**, **domain**, **infra** e **presenter** e como iniciar as aplicações com Maven. [CLASSES-E-FLUXOS.md](docs/CLASSES-E-FLUXOS.md) apresenta cada classe e quem chama quem. Cada declaração Java possui um comentário didático.

@@ -2,13 +2,20 @@ package br.com.fiap.b3.aula1;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import br.com.fiap.b3.aula1.application.port.out.*;
-import br.com.fiap.b3.aula1.application.usecase.*;
+import br.com.fiap.b3.aula1.domain.port.out.*;
+import br.com.fiap.b3.aula1.domain.usecase.*;
 import br.com.fiap.b3.ordens.domain.*;
 import java.time.*;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Verifica as decisões dos casos de uso sem iniciar banco ou brokers.
+ *
+ * <p>Quem chama: Maven Surefire ao executar mvn verify.
+ *
+ * <p>Quem é chamado: casos de uso com portas falsas ou mocks e relógio fixo.
+ */
 class OrderUseCasesTest {
   private static final Clock CLOCK =
       Clock.fixed(Instant.parse("2026-10-23T12:00:00Z"), ZoneOffset.UTC);

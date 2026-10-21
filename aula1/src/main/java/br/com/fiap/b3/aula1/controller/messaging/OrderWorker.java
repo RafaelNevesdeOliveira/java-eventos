@@ -1,14 +1,20 @@
-package br.com.fiap.b3.aula1.adapters.in.messaging;
+package br.com.fiap.b3.aula1.controller.messaging;
 
-import br.com.fiap.b3.aula1.adapters.contract.OrderCommand;
-import br.com.fiap.b3.aula1.application.usecase.AcceptOrderUseCase;
-import br.com.fiap.b3.aula1.infrastructure.config.Topology;
+import br.com.fiap.b3.aula1.domain.usecase.AcceptOrderUseCase;
+import br.com.fiap.b3.aula1.presenter.contract.OrderCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
 
+/**
+ * Recebe o comando RabbitMQ, converte o contrato e aciona a aceitação.
+ *
+ * <p>Quem chama: listener RabbitMQ do Spring, com dois workers configurados.
+ *
+ * <p>Quem é chamado: OrderCommand.toDomain e AcceptOrderUseCase; retorno permite o ack.
+ */
 @Component
 public class OrderWorker {
   private static final Logger log = LoggerFactory.getLogger(OrderWorker.class);
@@ -20,7 +26,7 @@ public class OrderWorker {
     this.json = json;
   }
 
-  @RabbitListener(queues = Topology.QUEUE)
+  @RabbitListener(queues = "aula1.ordens.comandos")
   public void execute(String payload) {
     var command = json.readValue(payload, OrderCommand.class);
     accept.execute(command.toDomain());
