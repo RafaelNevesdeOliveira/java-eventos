@@ -2,7 +2,9 @@
 
 **Branch:** `aula-2`. **Resultado:** gravar ordem e evento na mesma transação, publicar por Outbox e processar reentregas sem repetir o efeito no banco. Os conceitos de fila/grupos vistos na aula 1 continuam válidos; esta aplicação usa diretamente PostgreSQL e Kafka.
 
-Planejamento para três blocos: 60 minutos de CloudEvents/evolução de contratos, 60 minutos de propagação de estado e semânticas de entrega e 60 minutos de experimentos com Outbox/Inbox. Prepare as imagens antes da aula. Os passos abaixo formam uma sequência executável; o professor pode retomar a leitura dos fluxos durante os blocos.
+Leia também [o guia de cada classe e suas chamadas](CLASSES-E-FLUXOS.md) e [a arquitetura controller, domain, infra e presenter](ARQUITETURA.md).
+
+Prepare as imagens antes da aula. Siga a sequência de experimentos abaixo.
 
 ## 1. Encerrar a aula 1 e trocar de branch
 
@@ -50,21 +52,21 @@ Prefixo Java da aula: `aula2/src/main/java/br/com/fiap/b3/aula2/`. O domínio co
 
 | Camada | Arquivo relativo ao prefixo da aula | Responsabilidade |
 |---|---|---|
-| Entrada HTTP | `adapters/in/web/LabController.java` | JSON, status HTTP e chamada dos casos de uso. |
-| Aplicação | `application/usecase/CreateOrderUseCase.java` | Criar ordem/evento e exigir atomicidade de ordem + Outbox. |
-| Portas | `application/port/out/OrderRepository.java` e `OutboxRepository.java` | Gravar ordem e armazenar/publicar pendentes, sem conhecer SQL. |
-| Aplicação | `application/usecase/PublishPendingEventsUseCase.java` | Ler lote pendente, publicar e só depois marcar envio. |
-| Entrada por agenda | `adapters/in/scheduling/OutboxScheduler.java` | Chamar periodicamente o caso de uso de publicação. |
-| Saída Kafka | `adapters/out/messaging/KafkaOrderEventPublisher.java` | Serializar CloudEvents, enviar com chave e esperar ack. |
-| Contrato | `adapters/contract/CloudEvent.java` | Envelope, validação e conversão para/de `OrderAccepted`. |
-| Entrada Kafka | `adapters/in/messaging/PositionConsumer.java` | Receber JSON e chamar a aplicação. |
-| Aplicação | `application/usecase/ApplyOrderAcceptedUseCase.java` | Registrar identidade na Inbox e aplicar efeito uma única vez. |
-| Portas | `application/port/out/InboxRepository.java` e `PositionRepository.java` | Deduplicação e atualização da projeção. |
-| Saídas SQL | `adapters/out/persistence/Jdbc*.java` | Implementações com SQL e `JdbcTemplate`. |
-| Porta transacional | `application/port/out/TransactionBoundary.java` | Permitir que casos de uso definam a unidade atômica. |
-| Infraestrutura | `infrastructure/transaction/SpringTransactionBoundary.java` | Executar essa unidade com `TransactionTemplate`. |
-| Consultas | `application/usecase/QueryLabUseCase.java` e `application/model/ReadModels.java` | Ler modelos tipados por uma porta. |
-| Composição | `infrastructure/config/UseCaseConfiguration.java` | Construir casos de uso e conectá-los às implementações. |
+| Entrada HTTP | `controller/http/LabController.java` | JSON, status HTTP e chamada dos casos de uso. |
+| Aplicação | `domain/usecase/CreateOrderUseCase.java` | Criar ordem/evento e exigir atomicidade de ordem + Outbox. |
+| Portas | `domain/port/out/OrderRepository.java` e `OutboxRepository.java` | Gravar ordem e armazenar/publicar pendentes, sem conhecer SQL. |
+| Aplicação | `domain/usecase/PublishPendingEventsUseCase.java` | Ler lote pendente, publicar e só depois marcar envio. |
+| Entrada por agenda | `controller/scheduling/OutboxScheduler.java` | Chamar periodicamente o caso de uso de publicação. |
+| Saída Kafka | `infra/messaging/KafkaOrderEventPublisher.java` | Serializar CloudEvents, enviar com chave e esperar ack. |
+| Contrato | `presenter/contract/CloudEvent.java` | Envelope, validação e conversão para/de `OrderAccepted`. |
+| Entrada Kafka | `controller/messaging/PositionConsumer.java` | Receber JSON e chamar a aplicação. |
+| Aplicação | `domain/usecase/ApplyOrderAcceptedUseCase.java` | Registrar identidade na Inbox e aplicar efeito uma única vez. |
+| Portas | `domain/port/out/InboxRepository.java` e `PositionRepository.java` | Deduplicação e atualização da projeção. |
+| Saídas SQL | `infra/persistence/Jdbc*.java` | Implementações com SQL e `JdbcTemplate`. |
+| Porta transacional | `domain/port/out/TransactionBoundary.java` | Permitir que casos de uso definam a unidade atômica. |
+| Infraestrutura | `infra/transaction/SpringTransactionBoundary.java` | Executar essa unidade com `TransactionTemplate`. |
+| Consultas | `domain/usecase/QueryLabUseCase.java` e `domain/model/ReadModels.java` | Ler modelos tipados por uma porta. |
+| Composição | `infra/config/UseCaseConfiguration.java` | Construir casos de uso e conectá-los às implementações. |
 
 As tabelas são criadas por `aula2/src/main/resources/schema.sql`. A configuração de conexão e de consumidores está em `aula2/src/main/resources/application.yml`.
 
@@ -300,7 +302,7 @@ podman build --target build -f aula2/Dockerfile -t b3-eda-aula2-testes .
 podman run --rm b3-eda-aula2-testes mvn -B -pl aula2 -am verify
 ```
 
-Na referência, `mvn verify` da raiz executa **21 testes** (domínio + duas aplicações). O comando em container seleciona domínio + aula 2 e executa **15 testes**. Seu teste adicional deve aumentar o total correspondente em um.
+Na referência, `mvn verify` da raiz executa **30 testes** (domínio + duas aplicações). O comando em container seleciona domínio + aula 2 e executa **21 testes**. Seu teste adicional deve aumentar o total correspondente em um.
 
 ## 15. Salvar, entregar e encerrar
 
@@ -308,7 +310,7 @@ Salve os dois arquivos alterados na branch `exercicios/aula-2`:
 
 ```sh
 git status
-git add aula2/src/main/java/br/com/fiap/b3/aula2/application/usecase/ApplyOrderAcceptedUseCase.java
+git add aula2/src/main/java/br/com/fiap/b3/aula2/domain/usecase/ApplyOrderAcceptedUseCase.java
 git add aula2/src/test/java/br/com/fiap/b3/aula2/OrderUseCasesTest.java
 git commit -m "Exercicio aula 2: identifica consumidor e testa falha na projecao"
 ```

@@ -31,3 +31,7 @@ Use as branches **aula-1** e **aula-2** para executar as respectivas aulas. Esta
 ## Separação do material docente
 
 Os gabaritos, o planejamento dos blocos e o roteiro do professor ficam nesta branch. O ZIP e o bundle dos alunos não incluem esses materiais. O bundle contém o histórico filtrado de `main`, `aula-1` e `aula-2`, com os mesmos commits publicados no GitHub e sem materiais docentes em nenhum commit. O histórico completo do professor continua preservado nesta branch.
+
+## Maven e as quatro camadas
+
+As aulas usam Maven e Java 25, com **controller**, **domain**, **infra** e **presenter**. Todos os tipos Java possuem comentários didáticos. Consulte [a arquitetura](docs/ARQUITETURA.md) e [a função de cada classe e quem chama quem](docs/CLASSES-E-FLUXOS.md). Os casos de uso e presenters são Java sem dependência de Spring; infra faz a composição e implementa as portas.

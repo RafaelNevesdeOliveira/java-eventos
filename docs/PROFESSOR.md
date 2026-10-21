@@ -17,7 +17,7 @@ Faça a instalação e o download inicial antes do encontro. Desconte dos blocos
 
 ## Leitura da arquitetura
 
-Apresente `ordens-domain`, os casos de uso em `application`, as implementações em `adapters` e a composição em `infrastructure`. Use [ARQUITETURA.md](ARQUITETURA.md) como mapa. As transações são delimitadas pelos casos de uso via `TransactionBoundary` e executadas por `SpringTransactionBoundary`, mantendo domínio e aplicação sem Spring.
+Apresente `ordens-domain`, os casos de uso e portas em `domain`, entradas em `controller`, formatos em `presenter` e implementações/composição em `infra`. Use [ARQUITETURA.md](ARQUITETURA.md) como mapa. As transações são delimitadas pelos casos de uso via `TransactionBoundary` e executadas por `SpringTransactionBoundary`, mantendo domínio e aplicação sem Spring.
 
 ## Gabarito da aula 1
 
@@ -67,3 +67,7 @@ Schema Registry: o exercício configura BACKWARD e usa um modelo fechado (`addit
 - Projeção ainda não apareceu: aguarde o relay, veja `/api/lab/status`, logs e saúde Kafka.
 - Reenvio retornou 404: use o ID do evento, não o ID da ordem.
 - Registry não responde: confirme perfil `contratos`, saúde Kafka e logs `schema-registry`.
+
+## Código comentado e Maven
+
+Use [CLASSES-E-FLUXOS.md](CLASSES-E-FLUXOS.md) para acompanhar o papel de cada classe e os chamadores. [ARQUITETURA.md](ARQUITETURA.md) descreve as quatro camadas e os comandos Maven. A revisão passou com 11 testes em aula-1 e 30 na raiz de aula-2; domínio + aula2 soma 21. As duas aplicações também foram executadas via Maven contra a infraestrutura Podman existente. O registro em VALIDACAO.md delimita quais cenários foram repetidos.

@@ -2,7 +2,9 @@
 
 **Branch:** `aula-1`. **Resultado:** receber um comando HTTP, distribuí-lo por uma fila e publicar um evento consumido de forma independente por Risco e Auditoria.
 
-Trabalhe em dupla. Planejamento para três blocos: 60 minutos de vocabulário/cenário, 60 minutos de leitura do fluxo e 60 minutos de execução/evolução. Faça a instalação e o download inicial antes da aula. Desconte dos blocos os intervalos que precisarem caber nas três horas.
+Leia também [o guia de cada classe e suas chamadas](CLASSES-E-FLUXOS.md) e [a arquitetura controller, domain, infra e presenter](ARQUITETURA.md).
+
+Trabalhe em dupla. Faça a instalação e o download inicial antes da aula.
 
 ## 1. Preparar e conferir a branch
 
@@ -72,18 +74,18 @@ Os caminhos Java abaixo têm os prefixos:
 |---|---|---|
 | Domínio | `domain/Order.java` | Conta, ativo e quantidade; validações que independem do HTTP. |
 | Domínio | `domain/OrderAccepted.java` | Fato do negócio com ID, ordem e instante. |
-| Entrada HTTP | `adapters/in/web/OrderController.java` | Recebe JSON e chama o caso de uso; não acessa o RabbitTemplate. |
-| Aplicação | `application/usecase/SubmitOrderUseCase.java` | Cria a ordem e pede publicação do comando por uma porta. |
-| Porta de saída | `application/port/out/OrderCommandPublisher.java` | Capacidade de publicar; não informa como o broker funciona. |
-| Saída RabbitMQ | `adapters/out/messaging/RabbitOrderCommandPublisher.java` | Serialização, envio, publisher confirm e retorno de roteamento. |
-| Entrada RabbitMQ | `adapters/in/messaging/OrderWorker.java` | Recebe comando e chama `AcceptOrderUseCase`. |
-| Aplicação | `application/usecase/AcceptOrderUseCase.java` | Cria o evento e chama a porta de publicação de eventos. |
-| Porta de saída | `application/port/out/OrderEventPublisher.java` | Capacidade de publicar o evento. |
-| Saída Kafka | `adapters/out/messaging/KafkaOrderEventPublisher.java` | Publicação Kafka com chave por conta e espera pelo ack. |
-| Entradas Kafka | `adapters/in/messaging/EventSubscribers.java` | Grupos Risco e Auditoria; registra partição/offset. |
-| Contratos | `adapters/contract/OrderCommand.java` e `AcceptedEventMessage.java` | JSON de integração e conversão para/de domínio. |
-| Infraestrutura | `infrastructure/config/Topology.java` | Fila, tópico e três partições. |
-| Infraestrutura | `infrastructure/config/UseCaseConfiguration.java` | Conecta portas/implementações e fornece o relógio. |
+| Entrada HTTP | `controller/http/OrderController.java` | Recebe JSON e chama o caso de uso; não acessa o RabbitTemplate. |
+| Aplicação | `domain/usecase/SubmitOrderUseCase.java` | Cria a ordem e pede publicação do comando por uma porta. |
+| Porta de saída | `domain/port/out/OrderCommandPublisher.java` | Capacidade de publicar; não informa como o broker funciona. |
+| Saída RabbitMQ | `infra/messaging/RabbitOrderCommandPublisher.java` | Serialização, envio, publisher confirm e retorno de roteamento. |
+| Entrada RabbitMQ | `controller/messaging/OrderWorker.java` | Recebe comando e chama `AcceptOrderUseCase`. |
+| Aplicação | `domain/usecase/AcceptOrderUseCase.java` | Cria o evento e chama a porta de publicação de eventos. |
+| Porta de saída | `domain/port/out/OrderEventPublisher.java` | Capacidade de publicar o evento. |
+| Saída Kafka | `infra/messaging/KafkaOrderEventPublisher.java` | Publicação Kafka com chave por conta e espera pelo ack. |
+| Entradas Kafka | `controller/messaging/EventSubscribers.java` | Grupos Risco e Auditoria; registra partição/offset. |
+| Contratos | `presenter/contract/OrderCommand.java` e `AcceptedEventMessage.java` | JSON de integração e conversão para/de domínio. |
+| Infraestrutura | `infra/config/Topology.java` | Fila, tópico e três partições. |
+| Infraestrutura | `infra/config/UseCaseConfiguration.java` | Conecta portas/implementações e fornece o relógio. |
 
 Domínio e casos de uso não importam Spring, JDBC, Jackson, Kafka ou RabbitMQ. Os adaptadores conhecem as portas da aplicação. O Spring conecta os objetos por injeção, na borda do sistema.
 
@@ -194,7 +196,7 @@ Crie sua branch de exercício a partir da referência:
 git switch -c exercicios/aula-1
 ```
 
-Em `aula1/src/main/java/br/com/fiap/b3/aula1/adapters/in/messaging/EventSubscribers.java`, adicione um terceiro método de listener seguindo os métodos existentes:
+Em `aula1/src/main/java/br/com/fiap/b3/aula1/controller/messaging/EventSubscribers.java`, adicione um terceiro método de listener seguindo os métodos existentes:
 
 ```java
 @KafkaListener(topics = Topology.TOPIC, groupId = "aula1-notificacao")
@@ -216,7 +218,7 @@ Espere a aplicação reiniciar, repita a requisição da etapa 5 e confira os lo
 Salve apenas o arquivo alterado:
 
 ```sh
-git add aula1/src/main/java/br/com/fiap/b3/aula1/adapters/in/messaging/EventSubscribers.java
+git add aula1/src/main/java/br/com/fiap/b3/aula1/controller/messaging/EventSubscribers.java
 git commit -m "Exercicio aula 1: acrescenta grupo de notificacao"
 ```
 
@@ -241,7 +243,7 @@ podman build --target build -f aula1/Dockerfile -t b3-eda-aula1-testes .
 podman run --rm b3-eda-aula1-testes mvn -B -pl aula1 -am verify
 ```
 
-**Esperado na branch `aula-1`:** oito testes passam: dois de domínio, três de casos de uso e três regras arquiteturais. Testes de unidade não precisam dos brokers em execução. Na branch `aula-2`, `mvn verify` da raiz inclui a segunda aplicação e executa 21 testes; use `mvn -pl aula1 -am verify` para selecionar somente domínio + aula 1 (oito testes).
+**Esperado na branch `aula-1`:** 11 testes passam: dois de domínio, três de casos de uso, quatro regras arquiteturais e dois de contrato HTTP. Testes de unidade não precisam dos brokers em execução. Na branch `aula-2`, `mvn verify` da raiz inclui a segunda aplicação e executa 30 testes; use `mvn -pl aula1 -am verify` para selecionar somente domínio + aula 1 (11 testes).
 
 ## 12. Discutir a janela de duplicação
 

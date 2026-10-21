@@ -6,6 +6,13 @@ import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Protege as dependências de controller, domain, infra e presenter.
+ *
+ * <p>Quem chama: Maven Surefire ao executar mvn verify.
+ *
+ * <p>Quem é chamado: ArchUnit sobre as classes de produção, sem incluir os testes.
+ */
 class ArchitectureTest {
   private static final com.tngtech.archunit.core.domain.JavaClasses CLASSES =
       new ClassFileImporter()
@@ -16,32 +23,43 @@ class ArchitectureTest {
   void domainDependsOnlyOnJavaAndDomain() {
     classes()
         .that()
-        .resideInAPackage("..ordens.domain..")
+        .resideInAPackage("..domain..")
         .should()
         .onlyDependOnClassesThat()
-        .resideInAnyPackage("java..", "..ordens.domain..")
+        .resideInAnyPackage("java..", "..domain..")
         .check(CLASSES);
   }
 
   @Test
-  void applicationCannotDependOnFrameworksOrAdapters() {
+  void presenterDependsOnlyOnDomainAndPresentation() {
     classes()
         .that()
-        .resideInAPackage("..application..")
+        .resideInAPackage("..presenter..")
         .should()
         .onlyDependOnClassesThat()
-        .resideInAnyPackage("java..", "..application..", "..ordens.domain..")
+        .resideInAnyPackage("java..", "..domain..", "..presenter..")
         .check(CLASSES);
   }
 
   @Test
-  void inboundAdaptersCannotBypassUseCasesAndCallOutboundAdapters() {
+  void controllersCannotAccessInfraDirectly() {
     noClasses()
         .that()
-        .resideInAPackage("..adapters.in..")
+        .resideInAPackage("..controller..")
         .should()
         .dependOnClassesThat()
-        .resideInAPackage("..adapters.out..")
+        .resideInAPackage("..infra..")
+        .check(CLASSES);
+  }
+
+  @Test
+  void infraCannotCallControllers() {
+    noClasses()
+        .that()
+        .resideInAPackage("..infra..")
+        .should()
+        .dependOnClassesThat()
+        .resideInAPackage("..controller..")
         .check(CLASSES);
   }
 }
