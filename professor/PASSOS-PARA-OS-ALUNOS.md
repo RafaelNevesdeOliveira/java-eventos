@@ -2,6 +2,10 @@
 
 Antes da aula 1 da Jornada B3, peça que os alunos preparem o computador com internet e tempo para os downloads. A confirmação final é a mensagem **PRONTO**.
 
+## Alunos que já tinham uma cópia
+
+Reenvie a mensagem atualizada que está no ZIP. Oriente a turma a salvar os exercícios fora do projeto antigo, encerrar seus containers sem apagar volumes, renomear a pasta antiga e baixar o ZIP novo. O preparador deve fazer um novo clone com o destino padrão livre. Depois de PRONTO, retomem somente os arquivos de exercícios necessários, sem copiar `.git`, fazer `git pull` na cópia antiga ou mesclar o histórico anterior. A mensagem em Word reúne esses passos e os comandos do Windows e Mac em uma página.
+
 ## 1 Compartilhe o material
 
 Envie o [link direto do ZIP completo](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip). Esse único download inclui o projeto, os scripts e os guias.
