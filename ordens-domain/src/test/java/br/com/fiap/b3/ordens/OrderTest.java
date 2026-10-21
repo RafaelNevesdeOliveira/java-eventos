@@ -6,6 +6,13 @@ import br.com.fiap.b3.ordens.domain.Order;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Verifica as invariantes da ordem no módulo de domínio compartilhado.
+ *
+ * <p>Quem chama: Maven Surefire no módulo ordens-domain.
+ *
+ * <p>Quem é chamado: construtor Order com entradas válidas e inválidas.
+ */
 class OrderTest {
   @Test
   void domainRejectsInvalidOrderRegardlessOfTransport() {
