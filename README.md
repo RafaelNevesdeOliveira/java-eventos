@@ -51,7 +51,7 @@ podman compose down
 
 [Registro de validação](docs/VALIDACAO.md)
 
-O laboratório local substitui OCI Queue por RabbitMQ, OCI Streaming por Kafka e Supabase por PostgreSQL em container. Os conceitos são praticados localmente; APIs, permissões e provisionamento OCI são uma atividade específica posterior. A validação funcional foi feita em Docker com o mesmo Compose, devido ao erro de armazenamento registrado na VM Podman da preparação.
+O laboratório local substitui OCI Queue por RabbitMQ, OCI Streaming por Kafka e Supabase por PostgreSQL em container. Os conceitos são praticados localmente; APIs, permissões e provisionamento OCI são uma atividade específica posterior. As duas aulas foram validadas em Docker e, após recuperação pontual da VM, também em Podman 5.8.1 com 4 GB, sem reset nem exclusão de volumes. O diagnóstico e os limites estão no registro de validação.
 
 
 ## Repositório da turma
