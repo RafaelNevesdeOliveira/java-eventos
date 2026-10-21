@@ -6,6 +6,7 @@ Este material acompanha a Jornada B3 de Arquitetura Orientada a Eventos. Você v
 
 | Ferramenta | Para que será usada | Necessidade |
 |---|---|---|
+| curl | Enviar as requisições HTTP dos guias | Obrigatório para os exemplos no terminal |
 | Git | Clonar o repositório e trocar de branch | Obrigatória |
 | Podman Desktop/Podman | Executar aplicações, brokers e banco em containers | Obrigatória |
 | Provedor Compose | Interpretar `compose.yaml` | Obrigatório; configure pelo Podman Desktop |
@@ -21,6 +22,7 @@ Valide as instalações no terminal escolhido:
 
 ```sh
 git --version
+curl --version
 podman --version
 python3 --version
 ```
@@ -86,7 +88,18 @@ O clone deve terminar em `aula-1` e a listagem deve incluir `origin/aula-2`. O c
 
 ### Recebendo uma URL Git
 
-Clone a URL exata informada pelo professor, selecionando a branch `aula-1` com a opção `-b aula-1`, entre na pasta criada e execute `git branch -a`. Não é preciso criar as branches de aula: elas já vêm do repositório.
+O repositório oficial da turma é [java-eventos](https://github.com/RafaelNevesdeOliveira/java-eventos). Execute:
+
+```sh
+git clone -b aula-1 https://github.com/RafaelNevesdeOliveira/java-eventos.git laboratorios-eda
+cd laboratorios-eda
+git branch -a
+git branch --show-current
+```
+
+**Esperado:** branch `aula-1`, com `origin/main`, `origin/aula-1` e `origin/aula-2` disponíveis. Não use `--single-branch`: a troca para a aula 2 depende da outra referência. O nome da pasta local é `laboratorios-eda`, mesmo que o repositório no GitHub se chame `java-eventos`.
+
+O botão **Download ZIP** do GitHub baixa apenas os arquivos de uma branch, sem o histórico necessário para `git switch`. Prefira o clone acima ou o bundle fornecido pelo professor.
 
 ### Usando a pasta original do professor
 
@@ -168,8 +181,10 @@ Para apagar todos os dados **deste projeto**, o professor pode orientar o uso de
 | Erro de armazenamento `overlay` | Pare a atividade e peça apoio ao professor; não faça reset/prune global do Podman. |
 | Troca de branch recusada | Leia `git status`, salve suas alterações e repita a troca. |
 
-O registro de validação do professor está em [VALIDACAO.md](VALIDACAO.md). A VM Podman da preparação apresentou erro de armazenamento; as regressões funcionais foram executadas em Docker com o mesmo Compose. Isso não garante funcionamento em toda configuração corporativa. O roteiro do aluno usa Podman e exige a conferência do motor na etapa 2.
+O registro de validação do professor está em [VALIDACAO.md da aula 2](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/VALIDACAO.md). A VM Podman da preparação apresentou erro de armazenamento; as regressões funcionais foram executadas em Docker com o mesmo Compose. Isso não garante funcionamento em toda configuração corporativa. O roteiro do aluno usa Podman e exige a conferência do motor na etapa 2.
 
 ## Próximo passo
 
-Abra [AULA-1.md](AULA-1.md). Depois de concluir e salvar os exercícios, siga a transição descrita em [AULA-2.md](AULA-2.md).
+Abra [guia da aula 1](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-1/docs/AULA-1.md). Depois de concluir e salvar os exercícios, siga a transição descrita em [guia da aula 2](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/AULA-2.md).
+
+Depois de selecionar a branch da aula, os guias também ficam disponíveis na pasta `docs/` do clone. A branch `main` contém somente o domínio inicial e este guia de preparação.
