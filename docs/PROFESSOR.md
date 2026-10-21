@@ -2,7 +2,7 @@
 
 ## Preparação
 
-Faça o download e o build antes do encontro. Em máquina corporativa, confirme autorização de execução das imagens, acesso aos registries e portas livres. Cada dupla usa sua própria instância local. Verifique `podman compose ps` e execute `python3 scripts/smoke.py`. Para o primeiro bloco da aula 2, ative o perfil `contratos` e execute `python3 scripts/contratos.py`.
+Faça o download e o build antes do encontro. Em máquina corporativa, confirme autorização de execução das imagens, acesso aos registries e portas livres. Cada dupla usa sua própria instância local. Verifique `podman compose ps` e execute `python3 scripts/smoke.py --aula 1` em `aula-1` ou `python3 scripts/smoke.py --aula 2` em `aula-2`. Para o primeiro bloco da aula 2, ative o perfil `contratos` e execute `python3 scripts/contratos.py`.
 
 As aulas têm três blocos planejados de 60 minutos. Se os intervalos precisam caber nas três horas corridas, desconte-os do tempo de exposição e reserve a maior parte do último bloco para execução. Os fontes estão completos como referência; conduza a leitura progressivamente e cobre as extensões dos roteiros como implementação do aluno.
 
@@ -32,7 +32,7 @@ O consumer não descarta silenciosamente mensagens após um número pequeno de t
 
 Event Carried State Transfer: campos suficientes para o efeito local, sem callback ao produtor. Notification: referência/identidade leva o consumidor a consultar mais dados. A consulta pode observar estado posterior ao evento, além de criar dependência de disponibilidade.
 
-Schema Registry: o exercício configura BACKWARD e usa um modelo fechado (`additionalProperties: false`) no v1. Adicionar propriedade opcional é compatível para o novo esquema ler dados antigos; o consumidor antigo pode rejeitar o campo novo. Não alegar FULL. O script verifica a resposta real do registry para os exemplos. A aplicação usa validação Java do v1 e não carrega schemas do registry automaticamente.
+Schema Registry: o exercício configura BACKWARD e usa um modelo fechado (`additionalProperties: false`) no v1. Adicionar propriedade opcional é compatível para o novo esquema ler dados antigos; o consumidor antigo pode rejeitar o campo novo. Não alegar FULL. O script verifica a resposta real do registry para os exemplos. A aplicação verifica campos e valores em Java, sem executar integralmente o JSON Schema v1, e não carrega schemas do registry automaticamente.
 
 ## Evidências para avaliação
 
