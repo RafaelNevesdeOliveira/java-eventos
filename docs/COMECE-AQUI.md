@@ -181,7 +181,7 @@ Para apagar todos os dados **deste projeto**, o professor pode orientar o uso de
 | Erro de armazenamento `overlay` | Pare a atividade e peça apoio ao professor; não faça reset/prune global do Podman. |
 | Troca de branch recusada | Leia `git status`, salve suas alterações e repita a troca. |
 
-O registro de validação do professor está em [VALIDACAO.md da aula 2](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/VALIDACAO.md). A VM Podman da preparação apresentou erro de armazenamento; as regressões funcionais foram executadas em Docker com o mesmo Compose. Isso não garante funcionamento em toda configuração corporativa. O roteiro do aluno usa Podman e exige a conferência do motor na etapa 2.
+O registro de validação do professor está em [VALIDACAO.md da aula 2](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/VALIDACAO.md). A validação inicial usou Docker porque a VM Podman apresentou erro de armazenamento. Na revisão posterior de 21/10/2026, a VM foi recuperada sem reset nem exclusão de volumes e as duas aulas foram executadas no Podman 5.8.1, em modo rootless, com 4 GB de memória. O diagnóstico e os resultados estão no registro. Cada aluno ainda deve conferir seu próprio motor na etapa 2.
 
 ## Próximo passo
 
