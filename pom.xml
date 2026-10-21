@@ -17,5 +17,6 @@
   </properties>
   <modules>
     <module>ordens-domain</module>
+    <module>aula1</module>
   </modules>
 </project>

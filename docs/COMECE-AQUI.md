@@ -50,7 +50,7 @@ podman machine start
 podman machine start
 ```
 
-Se estiver em execução, siga adiante; não é necessário iniciar outra VM. Para alterar recursos de uma VM existente, use as opções suportadas pelo provedor no Podman Desktop e faça isso com ela parada. Não remova/reset a VM da sua empresa para este exercício.
+Se estiver em execução, siga adiante; não é necessário iniciar outra VM. Para alterar recursos de uma VM existente, use as opções suportadas pelo provedor no Podman Desktop e faça isso com ela parada. Não remova nem redefina a VM da sua empresa para este exercício.
 
 ### Linux
 

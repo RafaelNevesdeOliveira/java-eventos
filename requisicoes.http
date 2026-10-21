@@ -1,0 +1,6 @@
+### Aula 1 — comando na fila (HTTP 202)
+POST http://localhost:8080/api/ordens
+Content-Type: application/json
+
+{"contaId":"conta-demo","ativo":"PETR4","quantidade":10}
+
