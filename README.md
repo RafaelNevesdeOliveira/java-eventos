@@ -52,3 +52,16 @@ podman compose down
 [Orientações do professor](docs/PROFESSOR.md) · [Registro de validação](docs/VALIDACAO.md)
 
 O laboratório local substitui OCI Queue por RabbitMQ, OCI Streaming por Kafka e Supabase por PostgreSQL em container. Os conceitos são praticados localmente; APIs, permissões e provisionamento OCI são uma atividade específica posterior. A validação funcional foi feita em Docker com o mesmo Compose, devido ao erro de armazenamento registrado na VM Podman da preparação.
+
+
+## Repositório da turma
+
+```sh
+git clone -b aula-1 https://github.com/RafaelNevesdeOliveira/java-eventos.git laboratorios-eda
+cd laboratorios-eda
+```
+
+- [Guia da aula 1: filas e streaming](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-1/docs/AULA-1.md).
+- [Guia da aula 2: contratos, Outbox e idempotência](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/AULA-2.md).
+
+Use Git para obter as três branches; o Download ZIP do GitHub não inclui histórico nem permite trocar de aula.
