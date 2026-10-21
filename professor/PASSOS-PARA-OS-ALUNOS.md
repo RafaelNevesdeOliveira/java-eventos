@@ -1,24 +1,30 @@
 # Passos do professor para orientar os alunos
 
-Antes da aula 1 da Jornada B3, peça que os alunos preparem o computador com internet e tempo para os downloads. A confirmação final é a mensagem **PRONTO**.
+Roteiro para a aula 1 da Jornada B3
 
-## Alunos que já tinham uma cópia
+O histórico do Git foi revisado. Oriente a turma a baixar o ZIP novo e fazer um novo clone antes da aula, com internet e tempo para os downloads. Quem ainda não tinha o projeto começa no passo 2.
 
-Reenvie a mensagem atualizada que está no ZIP. Oriente a turma a salvar os exercícios fora do projeto antigo, encerrar seus containers sem apagar volumes, renomear a pasta antiga e baixar o ZIP novo. O preparador deve fazer um novo clone com o destino padrão livre. Depois de PRONTO, retomem somente os arquivos de exercícios necessários, sem copiar `.git`, fazer `git pull` na cópia antiga ou mesclar o histórico anterior. A mensagem em Word reúne esses passos e os comandos do Windows e Mac em uma página.
+## 1 Oriente o backup e guarde a cópia antiga
 
-## 1 Compartilhe o material
+Peça que copiem os exercícios para uma pasta de backup fora do projeto antigo. Se já executaram o laboratório, no terminal do projeto antigo, encerrem os containers preservando os dados:
 
-Envie o [link direto do ZIP completo](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip). Esse único download inclui o projeto, os scripts e os guias.
+```sh
+podman compose --profile contratos down
+```
 
-Uma [cópia do mesmo ZIP está nesta branch](../entrega/Laboratorios_EDA_Aulas_1_e_2_Java25.zip). No GitHub, abra o arquivo e clique em **Download raw file** para baixá-lo.
+Depois, fechem a IDE e renomeiem a pasta antiga para um nome disponível, como **laboratorios-eda-antigo**. Não apaguem essa cópia. **Não usem git pull nem mesclem o histórico antigo.**
 
-## 2 Peça que extraiam o ZIP
+## 2 Compartilhe o ZIP novo
 
-Oriente a turma a abrir a pasta **Entrega_EDA_Alunos** já extraída e manter todos os arquivos juntos. A mensagem curta para repassar aos alunos é **Mensagem_Alunos_Preparacao_Aula_1.docx**, dentro dessa pasta.
+[Baixar o ZIP atualizado das aulas](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip)
 
-## 3 Oriente cada aluno pelo sistema que usa
+Peça que extraiam o ZIP em uma pasta nova, abram **Entrega_EDA_Alunos** e mantenham todos os arquivos juntos. A mensagem para enviar à turma é **Mensagem_Alunos_Preparacao_Aula_1.docx**, dentro do ZIP.
 
-**Windows:** dentro de **Entrega_EDA_Alunos**, clique na barra de endereço do Explorador, digite `powershell` e pressione Enter. Cole as duas linhas juntas e execute:
+## 3 Oriente o preparador para fazer um novo clone
+
+O destino padrão **JornadaB3/laboratorios-eda**, dentro da pasta pessoal, precisa estar livre após renomear a cópia antiga.
+
+**Windows:** na pasta **Entrega_EDA_Alunos**, clique na barra de endereço do Explorador, digite **powershell** e pressione Enter. Cole as duas linhas juntas e execute:
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass `
@@ -31,29 +37,26 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass `
 bash ./preparar-mac.sh
 ```
 
-## 4 Acompanhe as solicitações de instalação
+## 4 Acompanhe as permissões e o reinício
 
-Peça que leiam e confirmem as permissões. Se o Windows solicitar administrador, o aluno deve reabrir o PowerShell como administrador na mesma pasta e repetir o comando. Se aparecer **REINICIO NECESSARIO**, deve reiniciar o computador e executar o mesmo comando novamente. Bloqueios corporativos devem ser tratados com a TI.
+Se o Windows pedir administrador, reabra o PowerShell como administrador na mesma pasta e repita o comando. Se aparecer **REINICIO NECESSARIO**, reinicie o computador e repita o comando. Bloqueios corporativos devem ser tratados com a TI.
 
-## 5 Confirme quem está pronto
+## 5 Confirme PRONTO e a retomada dos exercícios
 
-Peça a cada aluno que confirme se apareceu **PRONTO**. Essa mensagem indica que o projeto foi preparado e o teste HTTP da aula 1 passou. Em caso de erro, peça a mensagem completa ou uma captura da tela para atendimento antes da aula.
+Peça a confirmação de **PRONTO** e que abram na IDE o projeto novo indicado ao final. O teste HTTP da aula 1 já terá passado. Retomem somente os arquivos dos exercícios necessários, sem copiar **.git** nem substituir o projeto inteiro. Mantenham o backup até conferir tudo. Em caso de erro, peça a mensagem completa ou uma captura da tela antes da aula.
 
-## 6 Comece a aula pelo projeto preparado
+## 6 Comece a aula e encerre preservando os dados
 
-Oriente os alunos a abrir na IDE a pasta indicada ao final do preparo e seguir **docs/AULA-1.md** dentro do projeto. Não precisam clonar novamente nem repetir a configuração manual.
-
-Ao encerrar, execute no terminal da pasta do projeto:
+No projeto novo, siga **docs/AULA-1.md**. O preparador já fez o novo clone; não é necessário repetir a instalação manual. Ao encerrar, no terminal da pasta do projeto, execute:
 
 ```sh
 podman compose down
 ```
 
-Esse encerramento preserva os dados do laboratório.
-
 ## Material para sua condução das aulas
 
-- [Guia do professor com gabaritos, avaliação e diagnóstico das duas aulas](../docs/PROFESSOR.md).
+- [Guia do professor e gabaritos](../docs/PROFESSOR.md).
 - [Este roteiro em Word](Roteiro_Professor_Passos_Alunos_Aula_1.docx).
+- [Cópia do ZIP nesta branch](../entrega/Laboratorios_EDA_Aulas_1_e_2_Java25.zip).
 - [Aula 1 na branch de referência](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-1/docs/AULA-1.md).
 - [Aula 2 na branch de referência](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/AULA-2.md).
