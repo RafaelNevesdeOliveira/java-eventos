@@ -75,3 +75,11 @@ Referências da investigação: [relato no projeto Podman sobre arquivos de lowe
 
 
 A checagem completa somente de leitura foi repetida após a reinicialização e o encerramento dos containers. As três camadas originalmente danificadas do laboratório não reapareceram. Restou somente a camada `34476af668ee94e8c33776af6f11854670b1c224a1bfd7b42d53c6eb71cb784e`, com alteração de mtime de `/run`, nas imagens antigas externas já identificadas. Por esse achado, o comando ainda retornou código 125; não se declara a VM globalmente livre de inconsistências. A VM foi desligada normalmente ao final, como estava antes desta investigação.
+
+## Revisão das quatro camadas com Maven em 21 de outubro de 2026
+
+Os pacotes foram reorganizados em controller, domain, infra e presenter, com Javadocs em cada classe, record e interface. Os casos de uso e portas ficam em domain; o presenter prepara os contratos e respostas. URLs, nomes de campos, tabelas e destinos de mensageria foram preservados.
+
+`mvn clean verify`, com JDK 25 e Maven 3.9.9, passou: 2 testes em main; 11 em aula-1; 30 na raiz de aula-2 (2 de domínio, 9 do módulo aula1 e 19 do módulo aula2). O total selecionando domínio + aula2 é 21. Os testes novos verificam contratos HTTP e a separação entre controllers e infraestrutura, além da independência de domain e presenter. As contagens e validações anteriores acima descrevem as revisões em que foram executadas.
+
+Na mesma revisão, as duas aplicações foram iniciadas com `mvn -pl aula1 spring-boot:run` e `mvn -pl aula2 spring-boot:run`, usando repositório Maven isolado. RabbitMQ, Kafka e PostgreSQL executaram na VM Podman rootless existente de 4 GiB. O smoke da aula 1 passou e os logs registraram o mesmo fluxo recebido por Risco e Auditoria. O smoke da aula 2 passou com entrada inválida, rollback de ordem + Outbox, relay pausado e retomado, convergência da projeção e três reenvios sem duplicar a posição. Não houve migração de tabelas, reset de VM ou exclusão de volumes. O teste de indisponibilidade do Kafka e o Schema Registry não foram reexecutados nesta revisão; suas evidências anteriores permanecem acima.

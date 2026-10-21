@@ -3,14 +3,21 @@ package br.com.fiap.b3.aula2;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import br.com.fiap.b3.aula2.application.port.out.*;
-import br.com.fiap.b3.aula2.application.usecase.*;
+import br.com.fiap.b3.aula2.domain.port.out.*;
+import br.com.fiap.b3.aula2.domain.usecase.*;
 import br.com.fiap.b3.ordens.domain.*;
 import java.time.*;
 import java.util.*;
 import java.util.function.Supplier;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Verifica as decisões dos casos de uso sem iniciar banco ou brokers.
+ *
+ * <p>Quem chama: Maven Surefire ao executar mvn verify.
+ *
+ * <p>Quem é chamado: casos de uso com portas falsas ou mocks e relógio fixo.
+ */
 class OrderUseCasesTest {
   private static final Clock CLOCK =
       Clock.fixed(Instant.parse("2026-10-27T12:00:00Z"), ZoneOffset.UTC);
@@ -20,6 +27,13 @@ class OrderUseCasesTest {
         UUID.randomUUID(), new Order(UUID.randomUUID(), "conta", "PETR4", 10), CLOCK.instant());
   }
 
+  /**
+   * Simula a fronteira transacional para verificar ordem de chamadas no teste.
+   *
+   * <p>Quem chama: OrderUseCasesTest ao montar os casos de uso.
+   *
+   * <p>Quem é chamado: Supplier do caso de uso; marca commit apenas quando não há exceção.
+   */
   static class Boundary implements TransactionBoundary {
     boolean active, committed;
 

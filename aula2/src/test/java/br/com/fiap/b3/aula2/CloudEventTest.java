@@ -2,13 +2,20 @@ package br.com.fiap.b3.aula2;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import br.com.fiap.b3.aula2.adapters.contract.CloudEvent;
+import br.com.fiap.b3.aula2.presenter.contract.CloudEvent;
 import br.com.fiap.b3.ordens.domain.*;
 import java.time.Instant;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import tools.jackson.databind.json.JsonMapper;
 
+/**
+ * Verifica a conversão entre o domínio e o envelope externo.
+ *
+ * <p>Quem chama: Maven Surefire na aula 2.
+ *
+ * <p>Quem é chamado: CloudEvent e JsonMapper; versões e identidade inválidas são rejeitadas.
+ */
 class CloudEventTest {
   private CloudEvent message() {
     return CloudEvent.from(

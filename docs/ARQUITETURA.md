@@ -1,59 +1,64 @@
-# Arquitetura do laboratório
+# Clean Architecture das aulas com Maven
 
-Esta visão descreve a evolução até `aula-2`. Na branch `aula-1`, estão presentes somente o domínio e a primeira aplicação; os caminhos da segunda aula passam a existir após a troca de branch.
+O projeto usa Java 25 e Maven multimódulo. `ordens-domain` contém entidades e fatos compartilhados; `aula1` e `aula2` são aplicações Spring Boot independentes. Cada branch contém apenas os módulos daquela etapa. A partir da aula 2, a primeira aplicação permanece como referência.
 
-A base usa Clean Architecture com domínio compartilhado em um módulo Maven próprio e casos de uso Java independentes de Spring. Cada aula mantém sua aplicação executável e seus adaptadores. A direção das dependências é protegida por testes ArchUnit em `mvn verify`.
+## As quatro camadas
 
-## Módulos e responsabilidades
+| Camada | Onde fica | Responsabilidade | Pode conhecer |
+|---|---|---|---|
+| `controller` | `aula*/controller/http`, `messaging`, `scheduling` | Receber HTTP, mensagens e ticks; chamar casos de uso | `domain`, `presenter` e bibliotecas de entrada |
+| `domain` | `ordens-domain/.../domain` e `aula*/domain` | Entidades, casos de uso, modelos internos e portas de saída | Java e o próprio domínio |
+| `infra` | `aula*/infra/config`, `messaging`, `persistence`, `transaction` | Spring, JDBC, RabbitMQ, Kafka, composição e transações reais | Portas e tipos de `domain`; contratos de `presenter` |
+| `presenter` | `aula*/presenter` e `presenter/contract` | Preparar a resposta HTTP e representar contratos externos | Java, modelos de `domain` e apresentação |
 
-| Local | Responsabilidade | Dependências permitidas |
-|---|---|---|
-| `ordens-domain` | `Order`, `OrderAccepted` e invariantes do negócio | Java; JUnit somente nos testes |
-| `aula1/application` | Enfileirar ordem e aceitar comando recebido | Java e domínio |
-| `aula2/application` | Criar ordem, publicar pendentes, aplicar evento, consultar e reenviar | Java e domínio |
-| `aula*/adapters/in/web` | HTTP, validação de entrada e tradução de respostas | Casos de uso e contratos de integração |
-| `aula*/adapters/in/messaging` | Receber mensagens e chamar casos de uso | Casos de uso, contratos e bibliotecas de mensageria |
-| `aula2/adapters/in/scheduling` | Acionar periodicamente a publicação | Caso de uso e agendamento Spring |
-| `aula*/adapters/out` | Implementar portas de publicação, persistência e consulta | Portas, domínio e bibliotecas externas |
-| `aula*/adapters/contract` | DTOs de comandos/eventos e envelope CloudEvents | Domínio e formato da integração |
-| `aula*/infrastructure` | Composição de objetos, configuração e transações Spring | Portas, casos de uso e framework |
+Para manter quatro pastas principais, as regras de aplicação ficam em `domain/usecase` e as portas em `domain/port/out`. Dentro da camada interna, entidades e casos de uso continuam tendo responsabilidades diferentes. Não coloque regras em controllers, SQL em casos de uso ou Spring no domínio. O módulo `ordens-domain` continua separado no Maven.
 
-Os casos de uso estão em pacotes dentro de cada aplicação, com independência verificada por ArchUnit. O domínio está separado também no build: seu JAR não traz Spring, Jackson, Kafka, RabbitMQ ou JDBC. Não há herança de entidades JPA, anotações de validação HTTP ou envelope CloudEvents no domínio.
+`Application` é somente o ponto de partida Spring Boot na raiz do pacote. `infra/config/UseCaseConfiguration` liga as portas às implementações e cria os presenters; os casos de uso e presenters são objetos Java sem anotações Spring.
 
-As classes de caso de uso são as APIs de entrada da aplicação. As interfaces em `application/port/out` descrevem as capacidades externas necessárias. Não é obrigatório criar outra interface com os mesmos métodos para cada caso de uso.
+## Quem chama quem
 
-## Fluxos principais
+A requisição HTTP segue `cliente -> controller -> caso de uso -> porta -> implementação infra`. Na volta, `resultado interno -> presenter -> controller -> JSON do cliente`. A seta de execução não muda a dependência do código: a implementação de infra conhece a interface do domínio, e o domínio não conhece sua implementação.
 
-**Aula 1:** `OrderController` → `SubmitOrderUseCase` → `OrderCommandPublisher` → implementação RabbitMQ. Na chegada do comando, `OrderWorker` → `AcceptOrderUseCase` → `OrderEventPublisher` → implementação Kafka. Os assinantes Risco e Auditoria continuam sendo adaptadores de demonstração que registram mensagens, sem regras de negócio próprias.
+Na aula 1: `OrderController -> SubmitOrderUseCase -> OrderCommandPublisher -> RabbitOrderCommandPublisher`. Depois da confirmação, `OrderPresenter` formata HTTP 202. O broker inicia outro fluxo: `OrderWorker -> AcceptOrderUseCase -> OrderEventPublisher -> KafkaOrderEventPublisher`. Risco e Auditoria são observadores independentes do tópico, demonstrados por `EventSubscribers`.
 
-**Aula 2, criação:** `LabController` → `CreateOrderUseCase` → `TransactionBoundary.required` → `OrderRepository` e `OutboxRepository`. O caso de uso cria o evento e define que as duas gravações pertencem à mesma unidade atômica. `JdbcOrderRepository` e `JdbcOutboxRepository` executam SQL; `SpringTransactionBoundary` executa a transação real.
+Na aula 2: `LabController -> CreateOrderUseCase -> TransactionBoundary -> OrderRepository + OutboxRepository`. O controller passa o resultado a `LabPresenter`, que devolve CloudEvents. O agendador chama `OutboxScheduler -> PublishPendingEventsUseCase -> OutboxRepository + OrderEventPublisher`. Na chegada do evento, `PositionConsumer -> ApplyOrderAcceptedUseCase -> InboxRepository + PositionRepository`, dentro da mesma transação SQL. Consultas seguem `LabController -> QueryLabUseCase -> LabReadRepository -> LabPresenter`.
 
-**Aula 2, relay:** `OutboxScheduler` → `PublishPendingEventsUseCase` → bloqueio de pendentes, publicação confirmada e marcação de envio dentro da unidade transacional. O adaptador JDBC contém `FOR UPDATE SKIP LOCKED`; o adaptador Kafka espera o ack. Se a publicação falhar, o caso de uso não marca o evento e a transação é revertida. O agendamento não contém SQL ou política de publicação.
+Os contratos `OrderCommand`, `AcceptedEventMessage` e `CloudEvent` são formatos externos em `presenter/contract`, compartilhados pelos limites de entrada e saída. Não são entidades. Os listeners convertem esses contratos antes de entrar nos casos de uso. A infraestrutura serializa os contratos para transporte e persistência de payloads.
 
-**Aula 2, projeção:** `PositionConsumer` desserializa/valida `CloudEvent` → `ApplyOrderAcceptedUseCase` → registro em `InboxRepository` e atualização de `PositionRepository` na mesma transação. O listener só retorna depois do commit SQL. A confirmação do offset continua posterior ao retorno. Duplicatas retornam sem repetir o efeito.
+## Compilar e executar com Maven
 
-**Consultas:** `QueryLabUseCase` usa `LabReadRepository`, com modelos de leitura tipados independentes dos nomes JSON. O adaptador HTTP preserva nomes como `conta_id` e `publicada_em`, usados pelos exercícios existentes.
+Na raiz da branch, com JDK 25 e Maven 3.9 disponíveis:
 
-## Contratos e dados existentes
+```sh
+mvn clean verify
+```
 
-URLs, portas, filas, tópicos, grupos, tabelas e identificadores de eventos foram preservados. Os registros anteriores de Outbox e Inbox continuam utilizáveis. O envelope CloudEvents permanece no limite da integração, com mapeamento para `OrderAccepted`. Nenhuma migração de banco é necessária para esta reorganização.
+Os testes de domínio, casos de uso, contratos HTTP e ArchUnit fazem parte do build. Para executar somente a aula 1 e suas dependências: `mvn -pl aula1 -am verify`. Na branch aula-2, use `mvn -pl aula2 -am verify` para selecionar domínio e aula 2.
 
-A unidade de deduplicação continua sendo `(consumer_name, source, eventId)`. A criação pela API não é idempotente por conta própria: uma nova chamada produz uma nova ordem. O relay continua sendo polling com entrega que pode se repetir, e não uma transação distribuída PostgreSQL/Kafka.
+Para rodar a aplicação pelo Maven no computador, deixe o Podman executar apenas os serviços de infraestrutura e encerre antes qualquer container da mesma aplicação:
 
-## Como evoluir
+```sh
+# Aula 1, na branch aula-1
+podman compose stop aula1
+podman compose up -d rabbitmq kafka
+mvn -pl aula1 -am install -DskipTests
+mvn -pl aula1 spring-boot:run
+```
 
-1. Acrescente invariantes e fatos de negócio em `ordens-domain`, com testes que não inicializam Spring.
-2. Acrescente o fluxo em `application/usecase`; defina uma porta de saída quando o caso precisar de algo externo.
-3. Implemente a porta em `adapters/out`. Receba HTTP, filas ou agendamento em um adaptador de entrada que chame o caso de uso.
-4. Registre novos casos de uso em `infrastructure/config/UseCaseConfiguration`. Não anote o caso de uso com `@Service` ou `@Transactional`.
-5. Mantenha os testes ArchUnit e valide o cenário completo. Novos consumidores precisam de identidade própria na Inbox e da mesma atomicidade entre deduplicação e efeito.
+```sh
+# Aula 2, na branch aula-2
+podman compose stop aula2
+podman compose up -d postgres kafka
+mvn -pl aula2 -am install -DskipTests
+mvn -pl aula2 spring-boot:run
+```
 
-Para a aula 3, uma Saga pode ter estado e transições no domínio, casos de uso de avanço/compensação na aplicação e portas de persistência/publicação implementadas pelos adaptadores. Uma integração OCI futura implementa as portas de mensageria; a adaptação ainda precisa respeitar as semânticas do serviço e a configuração dos listeners.
+`install` prepara o módulo compartilhado no repositório Maven local; `spring-boot:run` inicia somente o módulo escolhido. O teste deve ser feito antes com `verify`. Na aula 2, o Schema Registry é opcional para o bloco de contratos: `podman compose --profile contratos up -d schema-registry`. Use Ctrl+C para encerrar a aplicação Maven e `podman compose --profile contratos down` para encerrar a infraestrutura preservando os volumes.
 
-## Testes
+Os Dockerfiles também compilam com Maven; a opção de containers continua disponível. Não execute a mesma API no host e no container ao mesmo tempo. No host, as portas são 8080/8082 para APIs, 19092 para Kafka, 5673 para RabbitMQ e 5433 para PostgreSQL.
 
-`mvn verify` executa 21 testes: invariantes do domínio, casos de uso, conversão CloudEvents e regras de dependência. Os testes de unidade usam portas falsas ou mocks e verificam decisões, identidade e ordem das operações. Eles não substituem o PostgreSQL para provar rollback físico.
+## Garantias e limites
 
-`python3 scripts/smoke.py` verifica o fluxo real com banco e brokers iniciados, incluindo rollback, pausa/retomada e reentrega. `python3 scripts/contratos.py` verifica evolução contra o Schema Registry real. Veja o registro em `VALIDACAO.md`.
+URLs, campos JSON, tabelas, filas, tópicos e volumes não mudam com a organização de pacotes. Inbox e projeção continuam na mesma transação SQL; a entrega pode se repetir. Confirmar Kafka antes de marcar Outbox não produz uma transação distribuída com PostgreSQL. O domínio e o presenter não acessam Spring, JDBC ou os brokers: os testes ArchUnit protegem essas fronteiras.
 
-Referência da ferramenta de proteção arquitetural: [ArchUnit](https://www.archunit.org/userguide/html/000_Index.html).
+Leia [CLASSES-E-FLUXOS.md](CLASSES-E-FLUXOS.md) para a responsabilidade de cada classe, seus chamadores, suas saídas e os testes.
