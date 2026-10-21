@@ -28,6 +28,8 @@ Preencha uma tabela com mensagem, tipo e justificativa:
 | `CancelarOrdem` | Quem deve atender essa intenção? |
 | `OrdemRejeitada` | Quais interessados poderiam reagir a esse fato? |
 
+Desenhe também os contextos **Ordens**, **Risco** e **Auditoria**, indicando quem recebe o comando e quem reage ao evento. Risco e Auditoria são assinantes didáticos na mesma aplicação, não serviços implantados separadamente. `CancelarOrdem`, `OrdemRejeitada` e `ConsultarPosicao` são propostas de discussão; não há endpoints ou fluxos implementados para essas mensagens na aula 1.
+
 Neste exemplo, `OrdemAceita` significa que a ordem passou pelas validações didáticas do laboratório. Não significa execução ou liquidação real em uma bolsa.
 
 ## 3. Subir o ambiente
@@ -239,7 +241,7 @@ podman build --target build -f aula1/Dockerfile -t b3-eda-aula1-testes .
 podman run --rm b3-eda-aula1-testes mvn -B -pl aula1 -am verify
 ```
 
-**Esperado na referência:** oito testes passam: dois de domínio, três de casos de uso e três regras arquiteturais. Testes de unidade não precisam dos brokers em execução.
+**Esperado na branch `aula-1`:** oito testes passam: dois de domínio, três de casos de uso e três regras arquiteturais. Testes de unidade não precisam dos brokers em execução. Na branch `aula-2`, `mvn verify` da raiz inclui a segunda aplicação e executa 21 testes; use `mvn -pl aula1 -am verify` para selecionar somente domínio + aula 1 (oito testes).
 
 ## 12. Discutir a janela de duplicação
 
@@ -248,6 +250,8 @@ Siga `OrderWorker` → `AcceptOrderUseCase` → `KafkaOrderEventPublisher`. O wo
 O ID de evento é estável sob essa reentrega do comando, mas os assinantes desta aula apenas registram logs; ainda não há Inbox persistente. O `enable.idempotence` do produtor Kafka não elimina todas as duplicações entre sistemas. Esse limite é a motivação para a aula 2.
 
 ## 13. Entregar e encerrar
+
+Salve capturas e anotações fora de `.lab/` se quiser incluí-las no commit; essa pasta é ignorada pelo Git. Se o professor pedir evidências em arquivos, entregue-as junto da sua branch de exercício.
 
 Entregue: classificação das mensagens; mapa dos contextos Ordens/Risco/Auditoria; evidência dos dois workers e dos três grupos; leitura histórica; trecho de código alterado; explicação da janela de duplicação.
 

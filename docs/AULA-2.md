@@ -132,7 +132,7 @@ Abra `contratos/ordem-aceita-v1.json`, `ordem-aceita-v2-compativel.json` e `orde
 
 BACKWARD significa que o esquema novo aceita dados do anterior. Não é promessa de que todo consumidor antigo aceitará dados novos. Como v1 fecha propriedades adicionais, discuta o que ocorre se um produtor enviar `canal` a um consumidor que valida estritamente v1.
 
-**Onde fica na arquitetura:** schemas e CloudEvents são contratos de integração na borda. O Schema Registry deste exercício demonstra governança; o produtor não o consulta automaticamente para validar cada publicação. O consumidor valida o contrato v1 em Java. Identifique o adaptador em que você acrescentaria validação integral de JSON Schema.
+**Onde fica na arquitetura:** schemas e CloudEvents são contratos de integração na borda. O Schema Registry deste exercício demonstra governança; o produtor não o consulta automaticamente para validar cada publicação. O consumidor verifica em Java os campos e valores previstos em `CloudEvent.validar()`; isso não equivale a executar todo o JSON Schema v1. Identifique o adaptador em que você acrescentaria validação integral de JSON Schema.
 
 ## 7. Comparar propagação de estado
 
@@ -304,7 +304,16 @@ Na referência, `mvn verify` da raiz executa **21 testes** (domínio + duas apli
 
 ## 15. Salvar, entregar e encerrar
 
-Salve sua evolução com `git add` dos arquivos Java alterados e `git commit` na branch `exercicios/aula-2`. Use `git status` para conferir quais arquivos serão incluídos; as respostas em `.lab/` são ignoradas.
+Salve os dois arquivos alterados na branch `exercicios/aula-2`:
+
+```sh
+git status
+git add aula2/src/main/java/br/com/fiap/b3/aula2/application/usecase/ApplyOrderAcceptedUseCase.java
+git add aula2/src/test/java/br/com/fiap/b3/aula2/OrderUseCasesTest.java
+git commit -m "Exercicio aula 2: identifica consumidor e testa falha na projecao"
+```
+
+As respostas em `.lab/` são ignoradas pelo Git. Para entregar evidências em arquivos, copie as que o professor solicitar para outra pasta e inclua-as no commit, ou entregue-as separadamente junto da sua branch. Antes de repetir os experimentos, troque o sufixo das contas, como orientado na etapa 5.
 
 Entregue: CloudEvent anotado; resultado da evolução de contrato; evidência do rollback; antes/depois da pausa; reenvio com quantidade preservada; papel das quatro tabelas; teste novo e explicação dos limites de garantia.
 
