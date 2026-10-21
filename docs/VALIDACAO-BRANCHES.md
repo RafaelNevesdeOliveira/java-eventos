@@ -26,3 +26,19 @@
 Os comandos do roteiro usam Podman. A validação funcional desta preparação foi executada em Docker com o mesmo Compose e Dockerfiles, por causa do erro de armazenamento da VM Podman registrado em `VALIDACAO.md`. A execução integral com Podman nesta máquina não foi confirmada. Os comandos de instalação foram conferidos na documentação oficial e não são uma instalação automática na máquina de cada aluno.
 
 Os guias das duas aulas ficam disponíveis para leitura; os fontes da aplicação da segunda aula só aparecem em `aula-2`. O arquivo Git bundle é entregue com as branches para permitir clone e troca sem uma hospedagem remota.
+
+
+## Revisão para publicação no GitHub — 21/10/2026
+
+Repositório da turma: [RafaelNevesdeOliveira/java-eventos](https://github.com/RafaelNevesdeOliveira/java-eventos).
+
+- Estado inicial: `aula-2`, sem alterações pendentes, três branches locais e nenhum remoto configurado. O destino GitHub estava vazio.
+- Revisados `COMECE-AQUI`, guias das duas aulas, README e orientações do professor contra os fontes, scripts e Compose existentes. Nenhuma mudança nos fontes Java ou na infraestrutura foi necessária.
+- Acrescentados clone com `-b aula-1`, referências às duas aulas a partir de `main`, requisito de curl, distinção das mensagens apenas discutidas, instruções de entrega de evidências e commits do exercício da aula 2.
+- Esclarecidos os totais de testes ao selecionar a aula 1 a partir de `aula-2` e o limite da validação Java em relação ao JSON Schema completo. Corrigida a seleção de aula no comando de smoke do professor.
+- Java 25: `mvn verify` na raiz de `aula-1`, oito testes; na raiz de `aula-2`, 21 testes. Todos passaram.
+- Docker, aula 1 isolada: build e Compose, smoke HTTP 202/400, fila com dois consumidores e o mesmo evento nos logs de Risco e Auditoria.
+- Docker, aula 2 isolada: build e Compose, smoke com rollback de ordem + Outbox, pausa/retomada e três reenvios preservando quantidade 10; contratos com campo opcional aceito e mudança de tipo rejeitada com HTTP 409.
+- Links Markdown locais e sintaxe Bash dos blocos de comandos revisados. As branches preservam a progressão `main` → `aula-1` → `aula-2`, sem reescrever os commits originais.
+
+Esta revisão não repetiu todos os experimentos manuais, como a queda do Kafka ou a implementação individual dos exercícios. As evidências complementares anteriores permanecem registradas acima. Não houve nova validação integral com Podman nem alteração/reset da sua VM. Os containers usados na revisão foram encerrados preservando volumes.
