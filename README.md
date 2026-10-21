@@ -27,3 +27,7 @@ Para enviar a mensagem à turma, use **Mensagem_Alunos_Preparacao_Aula_1.docx**,
 - [Verificação das branches](docs/VALIDACAO-BRANCHES.md).
 
 Use as branches **aula-1** e **aula-2** para executar as respectivas aulas. Esta branch reúne o material de apoio do professor e tem como base o código de referência da aula 2. O bundle do ZIP contém **main**, **aula-1** e **aula-2**; a branch **professor** fica disponível no GitHub.
+
+## Separação do material docente
+
+Os gabaritos, o planejamento dos blocos e o roteiro do professor ficam nesta branch. O ZIP e o bundle dos alunos não incluem esses materiais. O bundle contém três snapshots limpos de `main`, `aula-1` e `aula-2`; os commits de origem do GitHub estão registrados no manifesto do pacote.

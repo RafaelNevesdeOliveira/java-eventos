@@ -8,6 +8,13 @@ Faça o download e o build antes do encontro. Em máquina corporativa, confirme 
 
 As aulas têm três blocos planejados de 60 minutos. Se os intervalos precisam caber nas três horas corridas, desconte-os do tempo de exposição e reserve a maior parte do último bloco para execução. Os fontes estão completos como referência; conduza a leitura progressivamente e cobre as extensões dos roteiros como implementação do aluno.
 
+## Planejamento dos blocos
+
+- Aula 1: 60 minutos de vocabulário e cenário, 60 minutos de leitura do fluxo e 60 minutos de execução e evolução. Proponha trabalho em dupla.
+- Aula 2: 60 minutos de CloudEvents e evolução de contratos, 60 minutos de propagação de estado e semânticas de entrega e 60 minutos de experimentos com Outbox e Inbox.
+
+Faça a instalação e o download inicial antes do encontro. Desconte dos blocos os intervalos que precisarem caber nas três horas. Retome a leitura dos fluxos ao longo dos experimentos.
+
 ## Leitura da arquitetura
 
 Apresente `ordens-domain`, os casos de uso em `application`, as implementações em `adapters` e a composição em `infrastructure`. Use [ARQUITETURA.md](ARQUITETURA.md) como mapa. As transações são delimitadas pelos casos de uso via `TransactionBoundary` e executadas por `SpringTransactionBoundary`, mantendo domínio e aplicação sem Spring.
