@@ -3,10 +3,11 @@
 ## Download para os alunos
 
 - [Baixar o ZIP completo — recomendado](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip)
+- [Baixar o guia de preparação para Windows e macOS em Word](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Guia_Preparacao_Ambiente_Windows_macOS_Jornada_B3.docx)
 - [Baixar somente o bundle Git](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2.bundle)
 - [Ver a release v1.0.0](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/tag/aulas-1-e-2-v1.0.0)
 
-O ZIP contém a pasta `Entrega_EDA_Alunos`, com `LEIA-PRIMEIRO.md`, os guias revisados, a validação das duas aulas no Podman e o bundle com as três branches e o histórico. Descompacte o pacote, leia `LEIA-PRIMEIRO.md` e clone o bundle conforme as instruções. O primeiro build ainda precisa de internet para baixar imagens e dependências.
+O ZIP contém a pasta `Entrega_EDA_Alunos`, com `LEIA-PRIMEIRO.md`, o guia de preparação em Word para Windows e macOS, os guias revisados, a validação das duas aulas no Podman e o bundle com as três branches e o histórico. Descompacte o pacote, leia `LEIA-PRIMEIRO.md` e clone o bundle conforme as instruções. O primeiro build ainda precisa de internet para baixar imagens e dependências.
 
 **Branch de referência: `aula-2`.** Java 25 · Spring Boot 4.1.1 · Clean Architecture · Podman Compose.
 
