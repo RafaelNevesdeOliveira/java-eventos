@@ -1,6 +1,6 @@
 # Orientações do professor
 
-Para orientar o preparo da turma, comece pelos [seis passos para os alunos](../professor/PASSOS-PARA-OS-ALUNOS.md). O [ZIP de entrega](../entrega/Laboratorios_EDA_Aulas_1_e_2_Java25.zip) está nesta branch e na release.
+Para orientar o preparo da turma, comece pelos [roteiro de preparação, leitura das classes e condução das duas aulas](../professor/PASSOS-PARA-OS-ALUNOS.md). O [ZIP de entrega](../entrega/Laboratorios_EDA_Aulas_1_e_2_Java25.zip) está nesta branch e na release.
 
 ## Preparação
 

@@ -4,7 +4,7 @@ Esta é a branch **professor** dos laboratórios de Arquitetura Orientada a Even
 
 ## Preparar e orientar a turma
 
-1. [Siga os seis passos para orientar os alunos](professor/PASSOS-PARA-OS-ALUNOS.md).
+1. [Roteiro de preparação e condução das duas aulas com Maven](professor/PASSOS-PARA-OS-ALUNOS.md).
 2. [Baixe o roteiro do professor em Word](professor/Roteiro_Professor_Passos_Alunos_Aula_1.docx).
 3. [Consulte o guia do professor](docs/PROFESSOR.md), com planejamento, gabaritos das duas aulas, critérios de avaliação e diagnóstico.
 
