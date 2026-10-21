@@ -4,3 +4,32 @@ Content-Type: application/json
 
 {"contaId":"conta-demo","ativo":"PETR4","quantidade":10}
 
+### Aula 2 — transação ordem + outbox (HTTP 201)
+POST http://localhost:8082/api/ordens
+Content-Type: application/json
+
+{"contaId":"conta-demo","ativo":"PETR4","quantidade":10}
+
+### Rollback de ambas as gravações (HTTP 503)
+POST http://localhost:8082/api/ordens?falhar=true
+Content-Type: application/json
+
+{"contaId":"conta-demo","ativo":"PETR4","quantidade":10}
+
+### Estado do laboratório
+GET http://localhost:8082/api/lab/status
+
+### Leitura da projeção
+GET http://localhost:8082/api/posicoes
+
+### Outbox e IDs dos eventos
+GET http://localhost:8082/api/outbox
+
+### Pausar o relay antes de criar uma nova ordem
+POST http://localhost:8082/api/lab/relay/pausar
+
+### Retomar o relay
+POST http://localhost:8082/api/lab/relay/retomar
+
+### Substituir ID_DO_EVENTO pelo id do CloudEvent devolvido na criação
+POST http://localhost:8082/api/lab/outbox/ID_DO_EVENTO/reenviar

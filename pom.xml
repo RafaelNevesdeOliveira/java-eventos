@@ -18,5 +18,6 @@
   <modules>
     <module>ordens-domain</module>
     <module>aula1</module>
+    <module>aula2</module>
   </modules>
 </project>

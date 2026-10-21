@@ -23,7 +23,7 @@ Antes da reorganização, também foram verificados: dois consumidores na fila R
 
 Na validação inicial, o Podman construiu as imagens e iniciou a infraestrutura. Após reiniciar a VM, os containers apresentaram erro de armazenamento `readlink .../containers/storage/overlay: invalid argument`. A execução completa foi validada usando **Docker com o mesmo Compose**. A execução integral na VM Podman desta máquina não foi confirmada; não foi feito reset/prune do armazenamento existente. A revisão Clean Architecture foi verificada no Docker.
 
-A máquina Podman foi configurada com 4 GB para o laboratório. Os testes deixaram este projeto em execução no Docker. Antes de usar as mesmas portas no Podman, encerre o projeto no Docker, a partir da raiz do laboratório:
+A máquina Podman foi configurada com 4 GB para o laboratório. Na preparação inicial, o projeto ficou em execução no Docker. A validação posterior das branches encerrou esses containers, preservando os volumes. Se você iniciar outra execução no Docker, encerre-a antes de usar as mesmas portas no Podman, a partir da raiz do laboratório:
 
 ```sh
 docker compose --profile contratos down

@@ -4,6 +4,7 @@ COPY pom.xml .
 COPY ordens-domain/pom.xml ordens-domain/pom.xml
 COPY ordens-domain/src ordens-domain/src
 COPY aula1/pom.xml aula1/pom.xml
+COPY aula2/pom.xml aula2/pom.xml
 COPY aula1/src aula1/src
 RUN mvn -B -pl aula1 -am package -DskipTests
 FROM docker.io/library/eclipse-temurin:25-jre
