@@ -1,5 +1,7 @@
 # Orientações do professor
 
+Para orientar o preparo da turma, comece pelos [seis passos para os alunos](../professor/PASSOS-PARA-OS-ALUNOS.md). O [ZIP de entrega](../entrega/Laboratorios_EDA_Aulas_1_e_2_Java25.zip) está nesta branch e na release.
+
 ## Preparação
 
 Faça o download e o build antes do encontro. Em máquina corporativa, confirme autorização de execução das imagens, acesso aos registries e portas livres. Cada dupla usa sua própria instância local. Verifique `podman compose ps` e execute `python3 scripts/smoke.py --aula 1` em `aula-1` ou `python3 scripts/smoke.py --aula 2` em `aula-2`. Para o primeiro bloco da aula 2, ative o perfil `contratos` e execute `python3 scripts/contratos.py`.
