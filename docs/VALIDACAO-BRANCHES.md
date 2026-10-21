@@ -23,7 +23,7 @@
 
 ## Método e limites
 
-Os comandos do roteiro usam Podman. A validação funcional desta preparação foi executada em Docker com o mesmo Compose e Dockerfiles, por causa do erro de armazenamento da VM Podman registrado em `VALIDACAO.md`. A execução integral com Podman nesta máquina não foi confirmada. Os comandos de instalação foram conferidos na documentação oficial e não são uma instalação automática na máquina de cada aluno.
+Os comandos do roteiro usam Podman. A validação funcional desta preparação foi executada em Docker com o mesmo Compose e Dockerfiles, por causa do erro de armazenamento da VM Podman registrado em `VALIDACAO.md`. Naquela preparação inicial, a execução integral com Podman nesta máquina não foi confirmada. A recuperação e a nova validação estão em `VALIDACAO.md`. Os comandos de instalação foram conferidos na documentação oficial e não são uma instalação automática na máquina de cada aluno.
 
 Os guias das duas aulas ficam disponíveis para leitura; os fontes da aplicação da segunda aula só aparecem em `aula-2`. O arquivo Git bundle é entregue com as branches para permitir clone e troca sem uma hospedagem remota.
 
@@ -42,3 +42,8 @@ Repositório da turma: [RafaelNevesdeOliveira/java-eventos](https://github.com/R
 - Links Markdown locais e sintaxe Bash dos blocos de comandos revisados. As branches preservam a progressão `main` → `aula-1` → `aula-2`, sem reescrever os commits originais.
 
 Esta revisão não repetiu todos os experimentos manuais, como a queda do Kafka ou a implementação individual dos exercícios. As evidências complementares anteriores permanecem registradas acima. Não houve nova validação integral com Podman nem alteração/reset da sua VM. Os containers usados na revisão foram encerrados preservando volumes.
+
+
+## Revisão posterior com Podman
+
+Em 21/10/2026, a VM existente foi recuperada sem reset nem exclusão de volumes. As duas aulas passaram no Podman 5.8.1: oito testes Java para domínio + aula 1, 15 para domínio + aula 2, smoke de ambas, fan-out e histórico Kafka, contratos e indisponibilidade/recuperação do broker. Consulte [VALIDACAO.md](VALIDACAO.md) para o diagnóstico, backups, preservação de dados e limites.
