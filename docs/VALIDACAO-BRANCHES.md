@@ -1,5 +1,7 @@
 # Validação da organização por branches — 21/10/2026
 
+> Registro histórico da entrega anterior. A validação da integração OCI e do modo local na versão 1.1.0 está em [VALIDACAO-OCI.md](VALIDACAO-OCI.md). O pacote atual usa a branch `feat/oci-queue-streaming` e inclui quatro branches dos alunos.
+
 ## aula-1
 
 - Contém somente os módulos de domínio e da primeira aplicação; não há código do módulo `aula2`.
