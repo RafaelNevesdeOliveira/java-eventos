@@ -1,13 +1,15 @@
 # Laboratórios EDA — núcleo inicial
 
+> **Entrega atual v1.1.0:** o ZIP e o bundle incluem OCI Queue/Streaming e a opção local com Podman. O preparador abre `feat/oci-queue-streaming`, com as duas aulas. Esta branch mantém a etapa anterior como referência. [Guia da versão integrada](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/feat/oci-queue-streaming/docs/OCI.md).
+
 ## Download para os alunos
 
-- [Baixar o ZIP completo — recomendado](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip)
-- [Baixar o guia de preparação para Windows e macOS em Word](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Guia_Preparacao_Ambiente_Windows_macOS_Jornada_B3.docx)
-- [Baixar somente o bundle Git](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2.bundle)
-- [Ver a release v1.0.0](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/tag/aulas-1-e-2-v1.0.0)
+- [Baixar o ZIP completo — recomendado](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.1.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip)
+- [Baixar o guia de preparação para Windows e macOS em Word](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.1.0/Guia_Preparacao_Ambiente_Windows_macOS_Jornada_B3.docx)
+- [Baixar somente o bundle Git](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.1.0/Laboratorios_EDA_Aulas_1_e_2.bundle)
+- [Ver a release v1.1.0](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/tag/aulas-1-e-2-v1.1.0)
 
-O ZIP contém a pasta `Entrega_EDA_Alunos`, com `LEIA-PRIMEIRO.md`, o guia de preparação em Word para Windows e macOS, os guias revisados, a validação das duas aulas no Podman e o bundle com as três branches e o histórico. Descompacte o pacote e comece por `Mensagem_Alunos_Preparacao_Aula_1.docx`, com os comandos de preparação automática para Windows e Mac. O primeiro build ainda precisa de internet para baixar imagens e dependências.
+O ZIP contém a pasta `Entrega_EDA_Alunos`, com `LEIA-PRIMEIRO.md`, o guia de preparação em Word para Windows e macOS, os guias revisados, a validação das duas aulas no Podman e o bundle com quatro branches e o histórico dos alunos. Descompacte o pacote e comece por `Mensagem_Alunos_Preparacao_Aula_1.docx`, com os comandos de preparação automática para Windows e Mac. O primeiro build ainda precisa de internet para baixar imagens e dependências.
 
 Esta branch `main` contém o domínio compartilhado e os guias de entrada. Para executar as aulas, selecione uma das branches preparadas:
 
