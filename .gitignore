@@ -4,3 +4,11 @@
 .DS_Store
 .lab/
 __pycache__/
+
+# Credenciais OCI nunca fazem parte da entrega.
+.oci/
+.env
+.env.*
+*.pem
+*kafka-auth-token*
+*kafka.properties

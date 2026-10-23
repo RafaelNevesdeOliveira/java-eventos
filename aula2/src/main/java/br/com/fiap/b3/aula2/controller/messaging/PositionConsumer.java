@@ -26,7 +26,7 @@ public class PositionConsumer {
     this.json = json;
   }
 
-  @KafkaListener(topics = "aula2.ordens.aceitas.v1", groupId = "aula2-posicao")
+  @KafkaListener(topics = "${lab.kafka.topic}", groupId = "${lab.kafka.groups.posicao:aula2-posicao}")
   public void consume(String payload) {
     var message = json.readValue(payload, CloudEvent.class);
     boolean applied = apply.execute(message.source(), message.toDomain());

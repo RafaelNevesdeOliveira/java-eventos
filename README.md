@@ -1,4 +1,4 @@
-# Laboratórios EDA — aula 2
+# Laboratórios EDA — aulas 1 e 2
 
 ## Download para os alunos
 
@@ -14,6 +14,23 @@ O ZIP contém a pasta `Entrega_EDA_Alunos`, com `LEIA-PRIMEIRO.md`, o guia de pr
 1. [Prepare o ambiente e obtenha o repositório](docs/COMECE-AQUI.md).
 2. [Siga o passo a passo da aula 2](docs/AULA-2.md).
 3. [Consulte o mapa da Clean Architecture](docs/ARQUITETURA.md).
+
+## Executar com Maven: Podman ou OCI
+
+O modo local permanece disponível. Esta evolução adiciona OCI Queue na aula 1 e OCI Streaming
+com Kafka/SASL nas duas aulas. Consulte [OCI.md](docs/OCI.md) para configuração, autenticação e fluxos.
+
+```sh
+./scripts/iniciar.sh 1 local
+./scripts/iniciar.sh 2 local
+# Com as credenciais OCI privadas configuradas:
+./scripts/iniciar.sh 1 oci
+./scripts/iniciar.sh 2 oci
+```
+
+Execute cada comando em um terminal separado. No OCI, as APIs usam 8180/8182 e o PostgreSQL da
+segunda aula fica no Podman, em schema separado. O ZIP da release v1.0.0 acima corresponde à entrega
+anterior; esta integração está na branch `feat/oci-queue-streaming`.
 
 ## Iniciar esta aula
 

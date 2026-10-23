@@ -29,4 +29,6 @@ spring:
     init:
       mode: always
 lab:
+  kafka:
+    topic: aula2.ordens.aceitas.v1
   relay-delay-ms: 1500

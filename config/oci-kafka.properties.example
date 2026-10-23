@@ -1,0 +1,9 @@
+# Copie para ~/.oci/java-eventos/kafka.properties e restrinja a leitura ao seu usuário.
+# Nunca salve o Auth Token real no projeto, no Git ou no ZIP dos alunos.
+spring.kafka.bootstrap-servers=ENDPOINT_DO_STREAM_POOL:9092
+spring.kafka.properties.sasl.jaas.config=org.apache.kafka.common.security.plain.PlainLoginModule required username="TENANCY/DOMINIO/USUARIO/STREAM_POOL_OCID" password="AUTH_TOKEN";
+lab.oci.profile=JORNADA_B3
+lab.oci.queue-id=QUEUE_OCID
+lab.oci.queue-endpoint=https://ENDPOINT_MESSAGES_DA_FILA
+lab.oci.stream-aula1=NOME_DO_STREAM_AULA_1
+lab.oci.stream-aula2=NOME_DO_STREAM_AULA_2

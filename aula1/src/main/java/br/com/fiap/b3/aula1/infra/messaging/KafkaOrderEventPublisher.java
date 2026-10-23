@@ -1,10 +1,10 @@
 package br.com.fiap.b3.aula1.infra.messaging;
 
 import br.com.fiap.b3.aula1.domain.port.out.OrderEventPublisher;
-import br.com.fiap.b3.aula1.infra.config.Topology;
 import br.com.fiap.b3.aula1.presenter.contract.AcceptedEventMessage;
 import br.com.fiap.b3.ordens.domain.OrderAccepted;
 import java.util.concurrent.TimeUnit;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.ObjectMapper;
@@ -20,20 +20,26 @@ import tools.jackson.databind.ObjectMapper;
 public class KafkaOrderEventPublisher implements OrderEventPublisher {
   private final KafkaTemplate<String, String> kafka;
   private final ObjectMapper json;
+  private final String topic;
+  private final long confirmationTimeoutSeconds;
 
-  public KafkaOrderEventPublisher(KafkaTemplate<String, String> kafka, ObjectMapper json) {
+  public KafkaOrderEventPublisher(KafkaTemplate<String, String> kafka, ObjectMapper json,
+      @Value("${lab.kafka.topic}") String topic,
+      @Value("${lab.kafka.confirmation-timeout-seconds:15}") long confirmationTimeoutSeconds) {
     this.kafka = kafka;
     this.json = json;
+    this.topic = topic;
+    this.confirmationTimeoutSeconds = confirmationTimeoutSeconds;
   }
 
   public void publish(OrderAccepted event) {
     try {
       kafka
           .send(
-              Topology.TOPIC,
+              topic,
               event.order().contaId(),
               json.writeValueAsString(AcceptedEventMessage.from(event)))
-          .get(15, TimeUnit.SECONDS);
+          .get(confirmationTimeoutSeconds, TimeUnit.SECONDS);
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
       throw new IllegalStateException("Publicação interrompida", e);

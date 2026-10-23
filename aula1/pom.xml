@@ -9,6 +9,16 @@
   <artifactId>aula1</artifactId>
   <dependencies>
     <dependency>
+      <groupId>com.oracle.oci.sdk</groupId>
+      <artifactId>oci-java-sdk-queue</artifactId>
+      <version>${oci-sdk.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.oracle.oci.sdk</groupId>
+      <artifactId>oci-java-sdk-common-httpclient-jersey3</artifactId>
+      <version>${oci-sdk.version}</version>
+    </dependency>
+    <dependency>
       <groupId>br.com.fiap.b3</groupId>
       <artifactId>ordens-domain</artifactId>
       <version>${project.version}</version>

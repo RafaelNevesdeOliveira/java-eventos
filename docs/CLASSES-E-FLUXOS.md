@@ -109,3 +109,11 @@ Leia primeiro [ARQUITETURA.md](ARQUITETURA.md). Para cada fluxo HTTP, o controll
 ## Como conferir ao alterar uma classe
 
 Execute `mvn clean verify`. Os testes ArchUnit impedem dependências do domínio ou presenter em frameworks e acesso direto do controller à infra. Os testes HTTP verificam que a extração do presenter preserva status e nomes JSON. O smoke em `scripts/smoke.py` exige os serviços iniciados e continua necessário para validar transações e mensageria reais.
+
+## Extensão OCI
+
+A sequência completa de chamadas dos dois modos está em [OCI.md](OCI.md#quem-chama-quem).
+Leia nesta ordem: `OrderCommandReceiver` → `OciQueueConfiguration` → `OciOrderCommandPublisher`
+→ `OciOrderCommandReceiver` → `OciOrderWorker`. Em seguida, confira os tópicos e grupos configuráveis
+em `KafkaOrderEventPublisher`, `EventSubscribers`, `PositionConsumer` e `application-oci.yml` de cada aula.
+O SDK OCI permanece em `infra`; a porta do domínio carrega apenas a ordem e um comprovante opaco.

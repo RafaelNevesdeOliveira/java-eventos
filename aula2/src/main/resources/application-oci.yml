@@ -1,0 +1,31 @@
+# Ative com --spring.profiles.active=oci; o perfil padrão continua local.
+spring:
+  config:
+    import: "file:${OCI_KAFKA_CONFIG_FILE:${user.home}/.oci/java-eventos/kafka.properties}"
+  kafka:
+    admin:
+      auto-create: false
+    properties:
+      security.protocol: SASL_SSL
+      sasl.mechanism: PLAIN
+    producer:
+      properties:
+        enable.idempotence: false # OCI Streaming não implementa produção idempotente.
+        max.request.size: 1048576
+        retries: 5
+        delivery.timeout.ms: 60000
+        request.timeout.ms: 30000
+        max.block.ms: 60000
+    consumer:
+      auto-offset-reset: earliest # Grupo novo lê o histórico retido; grupos existentes retomam o commit.
+      properties:
+        group.protocol: classic
+        max.partition.fetch.bytes: 1048576
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5433/eda?currentSchema=oci_aulas}
+lab:
+  kafka:
+    topic: ${lab.oci.stream-aula2}
+    confirmation-timeout-seconds: 65
+    groups:
+      posicao: aula2-posicao-oci

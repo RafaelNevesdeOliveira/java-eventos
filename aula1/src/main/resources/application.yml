@@ -34,3 +34,7 @@ spring:
       simple:
         prefetch: 1
         concurrency: 2
+
+lab:
+  kafka:
+    topic: aula1.ordens.aceitas.v1

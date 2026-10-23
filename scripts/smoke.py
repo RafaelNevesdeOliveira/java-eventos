@@ -27,13 +27,18 @@ def wait_for(fn,description,seconds=90):
 
 parser=argparse.ArgumentParser(description="Verifica uma aula sem depender da outra aplicação")
 parser.add_argument('--aula',choices=('1','2'),default='2')
-lesson=parser.parse_args().aula
+parser.add_argument('--base-url',help='URL da API, por exemplo http://localhost:8182/api no modo OCI')
+args=parser.parse_args()
+lesson=args.aula
+if args.base_url:
+ if lesson=='1':A1=args.base_url.rstrip('/')
+ else:A2=args.base_url.rstrip('/')
 account='smoke-'+str(uuid.uuid4())
 body={'contaId':account,'ativo':'PETR4','quantidade':10}
 if lesson=='1':
  wait_for(lambda:request(A1,'/ordens',body,expected=202),'aula 1 recebendo comando')
  request(A1,'/ordens',dict(body,quantidade=0),expected=400)
- print('OK aula 1: comando confirmado pelo RabbitMQ e entrada inválida rejeitada; fan-out: conferir logs')
+ print('OK aula 1: comando confirmado pelo broker e entrada inválida rejeitada; fan-out: conferir logs')
  raise SystemExit(0)
 wait_for(lambda:request(A2,'/lab/status'),'aula 2 disponível')
 request(A2,'/ordens',dict(body,quantidade=0),expected=400)

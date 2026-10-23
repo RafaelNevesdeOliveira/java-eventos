@@ -16,12 +16,12 @@ import org.springframework.stereotype.Component;
 public class EventSubscribers {
   private static final Logger log = LoggerFactory.getLogger(EventSubscribers.class);
 
-  @KafkaListener(topics = "aula1.ordens.aceitas.v1", groupId = "aula1-risco")
+  @KafkaListener(topics = "${lab.kafka.topic}", groupId = "${lab.kafka.groups.risco:aula1-risco}")
   void risco(org.apache.kafka.clients.consumer.ConsumerRecord<String, String> record) {
     registrar("RISCO", record);
   }
 
-  @KafkaListener(topics = "aula1.ordens.aceitas.v1", groupId = "aula1-auditoria")
+  @KafkaListener(topics = "${lab.kafka.topic}", groupId = "${lab.kafka.groups.auditoria:aula1-auditoria}")
   void auditoria(org.apache.kafka.clients.consumer.ConsumerRecord<String, String> record) {
     registrar("AUDITORIA", record);
   }

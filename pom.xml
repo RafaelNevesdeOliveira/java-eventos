@@ -13,6 +13,7 @@
   <packaging>pom</packaging>
   <properties>
     <java.version>25</java.version>
+    <oci-sdk.version>3.97.2</oci-sdk.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <modules>
