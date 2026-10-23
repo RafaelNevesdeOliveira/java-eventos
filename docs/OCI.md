@@ -28,6 +28,33 @@ A aula 2 mantém o PostgreSQL no Podman nos dois modos. O perfil OCI usa o schem
 o local continua no schema padrão. O script cria o schema quando necessário e preserva os dados.
 As portas podem ser substituídas pela variável `PORT`. Nenhum comando reinicializa a VM ou remove volumes.
 
+## Executar no Windows com PowerShell
+
+O preparador do ZIP inicia o modo local completo no Podman, com Maven dentro dos containers.
+Para executar o perfil OCI pelo computador, instale também JDK 25, Maven e OCI CLI no Windows.
+Depois de preparar o arquivo privado descrito abaixo, na raiz do projeto execute:
+
+```powershell
+mvn -B install -DskipTests
+# Terminal da aula 1 OCI:
+$env:PORT = "8180"
+mvn -B -pl aula1 spring-boot:run "-Dspring-boot.run.profiles=oci"
+```
+
+Para a aula 2, em outro terminal:
+
+```powershell
+podman compose up -d --wait postgres
+podman compose exec -T postgres psql -U aluno -d eda -c "CREATE SCHEMA IF NOT EXISTS oci_aulas AUTHORIZATION aluno"
+$env:PORT = "8182"
+mvn -B -pl aula2 spring-boot:run "-Dspring-boot.run.profiles=oci"
+```
+
+No Windows, o arquivo privado fica em `%USERPROFILE%\.oci\java-eventos\kafka.properties`.
+Restrinja suas permissões ao próprio usuário nas propriedades de segurança do arquivo.
+A validação funcional OCI desta entrega foi realizada no Mac; instalação limpa e execução OCI
+em Windows não foram realizadas nesta revisão.
+
 ## Autenticação e configuração privada
 
 Queue e Streaming usam autenticações distintas:

@@ -1,6 +1,6 @@
 # Comece aqui — preparação do aluno
 
-Este material acompanha a Jornada B3 de Arquitetura Orientada a Eventos. Você vai receber uma solução de referência em Java 25/Spring Boot 4.1.1, executá-la, seguir seu fluxo no código e implementar pequenas evoluções. Os dados e as ordens são fictícios. Não é preciso conta OCI nem Supabase para estes laboratórios locais.
+Este material acompanha a Jornada B3 de Arquitetura Orientada a Eventos. Você vai receber uma solução de referência em Java 25/Spring Boot 4.1.1, executá-la, seguir seu fluxo no código e implementar pequenas evoluções. Os dados e as ordens são fictícios. O modo local não exige conta OCI. A integração opcional Queue/Streaming está descrita em [OCI.md](OCI.md).
 
 ## 1. O que instalar antes da aula
 
@@ -69,7 +69,7 @@ podman compose version
 
 Referência: [máquinas Podman no macOS/Windows](https://docs.podman.io/en/latest/markdown/podman-machine-init.1.html).
 
-## 3. Obter o repositório com as duas branches
+## 3. Obter a versão integrada das duas aulas
 
 O professor pode fornecer uma URL Git ou o arquivo **`Laboratorios_EDA_Aulas_1_e_2.bundle`**. Esse bundle contém o histórico e as branches; um ZIP comum de fontes não contém branches.
 
@@ -78,26 +78,26 @@ O professor pode fornecer uma URL Git ou o arquivo **`Laboratorios_EDA_Aulas_1_e
 Salve o arquivo em uma pasta, abra um terminal nessa pasta e execute:
 
 ```sh
-git clone -b aula-1 ./Laboratorios_EDA_Aulas_1_e_2.bundle laboratorios-eda
+git clone -b feat/oci-queue-streaming ./Laboratorios_EDA_Aulas_1_e_2.bundle laboratorios-eda
 cd laboratorios-eda
 git branch -a
 git branch --show-current
 ```
 
-O clone deve terminar em `aula-1` e a listagem deve incluir `origin/aula-2`. O caminho do bundle é local, por isso esse clone não precisa de uma hospedagem Git. Ele não instala imagens nem dependências; o build ainda precisa dos downloads iniciais.
+O clone deve terminar em `feat/oci-queue-streaming` e a listagem deve incluir `origin/aula-2`. O caminho do bundle é local, por isso esse clone não precisa de uma hospedagem Git. Ele não instala imagens nem dependências; o build ainda precisa dos downloads iniciais.
 
 ### Recebendo uma URL Git
 
 O repositório oficial da turma é [java-eventos](https://github.com/RafaelNevesdeOliveira/java-eventos). Execute:
 
 ```sh
-git clone -b aula-1 https://github.com/RafaelNevesdeOliveira/java-eventos.git laboratorios-eda
+git clone -b feat/oci-queue-streaming https://github.com/RafaelNevesdeOliveira/java-eventos.git laboratorios-eda
 cd laboratorios-eda
 git branch -a
 git branch --show-current
 ```
 
-**Esperado:** branch `aula-1`, com `origin/main`, `origin/aula-1` e `origin/aula-2` disponíveis. Não use `--single-branch`: a troca para a aula 2 depende da outra referência. O nome da pasta local é `laboratorios-eda`, mesmo que o repositório no GitHub se chame `java-eventos`.
+**Esperado:** branch `feat/oci-queue-streaming`, com `origin/main`, `origin/aula-1` e `origin/aula-2` disponíveis. As duas aplicações e a opção OCI já estão na branch integrada; não é necessário trocar de branch entre as aulas. O nome da pasta local é `laboratorios-eda`, mesmo que o repositório no GitHub se chame `java-eventos`.
 
 O botão **Download ZIP** do GitHub baixa apenas os arquivos de uma branch, sem o histórico necessário para `git switch`. Prefira o clone acima ou o bundle fornecido pelo professor.
 
@@ -107,16 +107,19 @@ Se você já recebeu a pasta com o repositório Git completo:
 
 ```sh
 cd laboratorios-eda
-git switch aula-1
+git switch feat/oci-queue-streaming
 git branch --show-current
 ```
 
 A partir daqui, todos os comandos são executados **na raiz do repositório**, onde estão `pom.xml` e `compose.yaml`.
 
+Permaneça em `feat/oci-queue-streaming` para usar os guias desta entrega. `main`, `aula-1` e `aula-2` são referências das etapas anteriores, preservadas no bundle.
+
 ## 4. Como as branches estão organizadas
 
 | Branch | Conteúdo | O que subir |
 |---|---|---|
+| `feat/oci-queue-streaming` | Duas aulas completas com modo local e OCI | Veja [OCI.md](OCI.md) |
 | `main` | Domínio inicial e orientação de entrada | Nenhuma aplicação |
 | `aula-1` | `ordens-domain` + `aula1`; RabbitMQ e Kafka | `podman compose up -d --build aula1` |
 | `aula-2` | Evolução da aula 1 com `aula2`, PostgreSQL e contratos | `podman compose up -d --build aula2` |

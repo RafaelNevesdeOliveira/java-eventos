@@ -1,32 +1,28 @@
 # Aula 2 — passo a passo do aluno
 
-**Branch:** `aula-2`. **Resultado:** gravar ordem e evento na mesma transação, publicar por Outbox e processar reentregas sem repetir o efeito no banco. Os conceitos de fila/grupos vistos na aula 1 continuam válidos; esta aplicação usa diretamente PostgreSQL e Kafka.
+**Branch desta entrega:** `feat/oci-queue-streaming`. **Resultado:** gravar ordem e evento na mesma transação, publicar por Outbox e processar reentregas sem repetir o efeito no banco. Os conceitos de fila/grupos vistos na aula 1 continuam válidos; esta aplicação usa diretamente PostgreSQL e Kafka.
 
 Leia também [o guia de cada classe e suas chamadas](CLASSES-E-FLUXOS.md) e [a arquitetura controller, domain, infra e presenter](ARQUITETURA.md).
 
 Prepare as imagens antes da aula. Siga a sequência de experimentos abaixo.
 
-## 1. Encerrar a aula 1 e trocar de branch
+## 1. Encerrar a aula 1 e manter a branch integrada
 
-Se você estava executando a aula 1, encerre **antes** da troca:
+Encerre a aplicação da aula 1 antes de prosseguir. Se iniciou pelo Maven, use Ctrl+C no terminal dela.
+Se iniciou pelo Compose, na raiz do projeto use:
 
 ```sh
 podman compose down
 git status
-```
-
-Salve suas alterações em `exercicios/aula-1` conforme o guia anterior. Com o diretório de trabalho sem alterações pendentes:
-
-```sh
-git switch aula-2
 git branch --show-current
 ```
 
-Em um clone, o Git normalmente cria a branch local a partir de `origin/aula-2`. Se não fizer isso automaticamente e `git branch -a` mostrar essa referência, execute `git switch --track origin/aula-2`.
+Salve seus exercícios em uma branch própria antes de trocar de referência. Nesta entrega,
+permaneça em `feat/oci-queue-streaming`: as duas aplicações já estão disponíveis. A branch histórica
+`aula-2` é uma referência anterior e não contém a integração OCI.
 
-**Esperado:** `aula-2`. A branch contém o código da primeira aula e acrescenta o módulo `aula2`, PostgreSQL e contratos. Ela não incorpora automaticamente o exercício individual salvo em `exercicios/aula-1`.
-
-Se estiver começando direto nesta aula, conclua [COMECE-AQUI.md](COMECE-AQUI.md) e depois selecione `aula-2`.
+Os comandos e portas abaixo são do **modo local com Podman**. Para Streaming com Kafka/SASL e
+PostgreSQL no Podman, use [OCI.md](OCI.md). Se estiver começando agora, siga [COMECE-AQUI.md](COMECE-AQUI.md).
 
 ## 2. Subir somente o que esta aula precisa
 

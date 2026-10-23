@@ -2,14 +2,14 @@
 
 ## Download para os alunos
 
-- [Baixar o ZIP completo — recomendado](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip)
-- [Baixar o guia de preparação para Windows e macOS em Word](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Guia_Preparacao_Ambiente_Windows_macOS_Jornada_B3.docx)
-- [Baixar somente o bundle Git](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.0.0/Laboratorios_EDA_Aulas_1_e_2.bundle)
-- [Ver a release v1.0.0](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/tag/aulas-1-e-2-v1.0.0)
+- [Baixar o ZIP completo — recomendado](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.1.0/Laboratorios_EDA_Aulas_1_e_2_Java25.zip)
+- [Baixar o guia de preparação para Windows e macOS em Word](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.1.0/Guia_Preparacao_Ambiente_Windows_macOS_Jornada_B3.docx)
+- [Baixar somente o bundle Git](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/download/aulas-1-e-2-v1.1.0/Laboratorios_EDA_Aulas_1_e_2.bundle)
+- [Ver a release v1.1.0](https://github.com/RafaelNevesdeOliveira/java-eventos/releases/tag/aulas-1-e-2-v1.1.0)
 
-O ZIP contém a pasta `Entrega_EDA_Alunos`, com `LEIA-PRIMEIRO.md`, o guia de preparação em Word para Windows e macOS, os guias revisados, a validação das duas aulas no Podman e o bundle com as três branches e o histórico. Descompacte o pacote e comece por `Mensagem_Alunos_Preparacao_Aula_1.docx`, com os comandos de preparação automática para Windows e Mac. O primeiro build ainda precisa de internet para baixar imagens e dependências.
+O ZIP contém a pasta `Entrega_EDA_Alunos`, com `LEIA-PRIMEIRO.md`, o guia de preparação em Word para Windows e macOS, os guias revisados, a validação das duas aulas no Podman e o bundle com quatro branches e o histórico dos alunos. Descompacte o pacote e comece por `Mensagem_Alunos_Preparacao_Aula_1.docx`, com os comandos de preparação automática para Windows e Mac. O primeiro build ainda precisa de internet para baixar imagens e dependências.
 
-**Branch de referência: `aula-2`.** Java 25 · Spring Boot 4.1.1 · Clean Architecture · Podman Compose.
+**Branch integrada desta entrega: `feat/oci-queue-streaming`.** Java 25 · Spring Boot 4.1.1 · Clean Architecture · Podman Compose.
 
 1. [Prepare o ambiente e obtenha o repositório](docs/COMECE-AQUI.md).
 2. [Siga o passo a passo da aula 2](docs/AULA-2.md).
@@ -29,8 +29,10 @@ com Kafka/SASL nas duas aulas. Consulte [OCI.md](docs/OCI.md) para configuraçã
 ```
 
 Execute cada comando em um terminal separado. No OCI, as APIs usam 8180/8182 e o PostgreSQL da
-segunda aula fica no Podman, em schema separado. O ZIP da release v1.0.0 acima corresponde à entrega
-anterior; esta integração está na branch `feat/oci-queue-streaming`.
+segunda aula fica no Podman, em schema separado. A release **v1.1.0** contém esta integração,
+os guias revisados e o bundle com `main`, `aula-1`, `aula-2` e `feat/oci-queue-streaming`.
+O preparador abre a branch integrada e inicia a aula 1 no modo local. OCI é opcional e usa as
+credenciais de cada aluno, configuradas fora do projeto. [Confira a validação](docs/VALIDACAO-OCI.md).
 
 ## Iniciar esta aula
 
@@ -92,7 +94,7 @@ cd laboratorios-eda
 - [Guia da aula 1: filas e streaming](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-1/docs/AULA-1.md).
 - [Guia da aula 2: contratos, Outbox e idempotência](https://github.com/RafaelNevesdeOliveira/java-eventos/blob/aula-2/docs/AULA-2.md).
 
-Para obter as três branches, clone o repositório ou use o bundle incluído no ZIP da entrega. O botão **Code → Download ZIP** do GitHub baixa somente uma branch, sem histórico.
+Para obter as quatro branches da entrega, clone o repositório ou use o bundle incluído no ZIP da entrega. O botão **Code → Download ZIP** do GitHub baixa somente uma branch, sem histórico.
 
 ## Maven e leitura das classes
 

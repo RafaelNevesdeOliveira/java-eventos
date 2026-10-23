@@ -1,6 +1,6 @@
 # Aula 1 — passo a passo do aluno
 
-**Branch:** `aula-1`. **Resultado:** receber um comando HTTP, distribuí-lo por uma fila e publicar um evento consumido de forma independente por Risco e Auditoria.
+**Branch desta entrega:** `feat/oci-queue-streaming`. **Resultado:** receber um comando HTTP, distribuí-lo por uma fila e publicar um evento consumido de forma independente por Risco e Auditoria.
 
 Leia também [o guia de cada classe e suas chamadas](CLASSES-E-FLUXOS.md) e [a arquitetura controller, domain, infra e presenter](ARQUITETURA.md).
 
@@ -11,12 +11,15 @@ Trabalhe em dupla. Faça a instalação e o download inicial antes da aula.
 Conclua [COMECE-AQUI.md](COMECE-AQUI.md): Git, Podman, Compose, Python e obtenção do repositório. Na raiz do projeto:
 
 ```sh
-git switch aula-1
+git switch feat/oci-queue-streaming
 git branch --show-current
 git status
 ```
 
-**Esperado:** branch `aula-1`. Nesta branch há `ordens-domain` e `aula1`; não há código da aplicação `aula2`. A pasta `aula1` é um módulo Maven; `aula-1` com hífen é o nome da branch.
+**Esperado:** branch `feat/oci-queue-streaming`, com `ordens-domain`, `aula1` e `aula2`.
+A branch histórica `aula-1` continua disponível como referência anterior. Permaneça na integrada
+para manter a opção OCI. Os comandos e portas deste guia são do **modo local com Podman**;
+para executar a mesma aula com Queue/Streaming e Maven, siga [OCI.md](OCI.md).
 
 ## 2. Antes de executar: classificar as mensagens
 
